@@ -1,0 +1,13 @@
+{
+  "Id": "SolastaWarlockClass",
+  "DisplayName": "SolastaWarlockClass",
+  "Author": "Holic92",
+  "Version": "0.0.1",
+  "ManagerVersion": "0.23.4",
+  "Requirements": [ "SolastaModApi", "SolastaModHelpers", "SolastaExtraContent" ],
+  "LoadAfter": [ "SolastaModApi", "SolastaModHelpers", "SolastaExtraContent" ],
+  "AssemblyName": "SolastaWarlockClass.dll",
+  "EntryMethod": "SolastaWarlockClass.Main.Load",
+  "Repository": "https://github.com/Holic75/SolastaWarlock",
+  "HomePage": ""
+}
