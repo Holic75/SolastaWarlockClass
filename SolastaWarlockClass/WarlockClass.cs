@@ -22,7 +22,7 @@ namespace SolastaWarlockClass
         static public CharacterClassDefinition warlock_class;
         static public SpellListDefinition warlock_spelllist;
 
-        static public FeatureDefinitionFeatureSet invocations;
+        static public Dictionary<int, FeatureDefinitionFeatureSet> invocations = new Dictionary<int, FeatureDefinitionFeatureSet>();
         static public FeatureDefinition agonizing_blast;
         static public FeatureDefinitionBonusCantrips repelling_blast;
         static public FeatureDefinition miring_blast;
@@ -32,6 +32,10 @@ namespace SolastaWarlockClass
         static public FeatureDefinitionBonusCantrips fiendish_vigor;
         static public FeatureDefinitionBonusCantrips otherworldy_leap;
         static public FeatureDefinitionBonusCantrips ascendant_step;
+        static public Dictionary<int, NewFeatureDefinitions.FeatureDefinitionExtraSpellSelection> book_of_secrets = new Dictionary<int, NewFeatureDefinitions.FeatureDefinitionExtraSpellSelection>();
+        static public FeatureDefinitionProficiency beguiling_influence;
+        static public FeatureDefinitionFeatureSet devils_sight;
+       
 
         static public FeatureDefinitionFeatureSet pact_boon;
         static public NewFeatureDefinitions.FeatureDefinitionExtraSpellSelection pact_of_tome;
@@ -44,13 +48,13 @@ namespace SolastaWarlockClass
 
         //pacts: Arrow - ranged weapons + infinite ammo
         //invocations: 
-        //acidic damage (acid damage equal to charisma to attacker)
-        //beguiling influence (prof in deception and persuasion)
-        //blade and bolt ?
-        //devil's sight (darkvision)
+        //blade and bolt  - bonus action attack after cantrip
         //thirsting blade (+1 attack)
-        //
+        //eldrtich smite
+        //eldritch archery
 
+        //patrons
+        //fiend, dragon?, 
 
 
 
@@ -258,19 +262,19 @@ namespace SolastaWarlockClass
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(weapon_proficiency, 1));
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(skills, 1));
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(warlock_spellcasting, 1));
-            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(invocations, 2));
-            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(invocations, 2));
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(invocations[1], 2));
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(invocations[2], 2));
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(pact_boon, 3));
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionFeatureSets.FeatureSetAbilityScoreChoice, 4));
-            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(invocations, 5));
-            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(invocations, 7));
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(invocations[5], 5));
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(invocations[7], 7));
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionFeatureSets.FeatureSetAbilityScoreChoice, 8));
-            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(invocations, 9));
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(invocations[9], 9));
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionFeatureSets.FeatureSetAbilityScoreChoice, 12));
-            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(invocations, 12));
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(invocations[12], 12));
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionFeatureSets.FeatureSetAbilityScoreChoice, 16));
-            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(invocations, 15));
-            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(invocations, 18));
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(invocations[15], 15));
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(invocations[18], 18));
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionFeatureSets.FeatureSetAbilityScoreChoice, 19));
 
             var subclassChoicesGuiPresentation = new GuiPresentation();
@@ -399,14 +403,7 @@ namespace SolastaWarlockClass
             var title_string = "Feature/&WarlockInvocationsTitle";
             var description_string = "Feature/&WarlockInvocationsDescription";
 
-            invocations = Helpers.FeatureSetBuilder.createFeatureSet("WarlockInvocations",
-                                                            "",
-                                                            title_string,
-                                                            description_string,
-                                                            false,
-                                                            FeatureDefinitionFeatureSet.FeatureSetMode.Exclusion,
-                                                            true
-                                                            );
+
 
             createRepellingBlast();
 
@@ -437,21 +434,106 @@ namespace SolastaWarlockClass
                                                         "Feature/&WarlockAscendantStepInvocationsDescription",
                                                         true);
 
+            createBookOfEldritchSecrets();
+            createBeguilingInfluence();
+            createDevilsSight();
 
-
-
-            invocations.featureSet = new List<FeatureDefinition>()
+            var invocations_features = new List<(FeatureDefinition, int)>()
             {
-                agonizing_blast,
-                miring_blast,
-                repelling_blast,
-                alien_ectoplasm,
-                armor_of_shadow,
-                eldritch_sight,
-                fiendish_vigor,
-                otherworldy_leap, //at lvl 9
-                ascendant_step, //at lvl 9
+                (agonizing_blast, 0),
+                (beguiling_influence, 0),
+                (miring_blast, 0),
+                (devils_sight, 0),
+                (repelling_blast, 0),
+                (alien_ectoplasm, 0),
+                (armor_of_shadow, 0),
+                (eldritch_sight, 0),
+                (fiendish_vigor, 0),
+                (otherworldy_leap, 9),
+                (ascendant_step, 9)
             };
+
+            foreach (var kv in book_of_secrets)
+            {
+                invocations_features.Add((kv.Value, kv.Key));
+            }
+
+
+            var invocations_levels = new int[] { 1, 2, 5, 7, 9, 12, 15, 18 };
+
+            foreach (var lvl in invocations_levels)
+            {
+                var feature = Helpers.FeatureSetBuilder.createFeatureSet("WarlockInvocations" + lvl.ToString(),
+                                                                            "",
+                                                                            title_string,
+                                                                            description_string,
+                                                                            false,
+                                                                            FeatureDefinitionFeatureSet.FeatureSetMode.Exclusion,
+                                                                            true
+                                                                            );
+                feature.featureSet = invocations_features.Where(f => f.Item2 <= lvl).Select(f => f.Item1).ToList();
+                invocations[lvl] = feature;
+            }
+        }
+
+
+
+        static void createDevilsSight()
+        {
+            var immunity = Helpers.CopyFeatureBuilder<FeatureDefinitionConditionAffinity>.createFeatureCopy("WarlockDevilsSightImmunityDarknessInvocation",
+                                                                                                  "",
+                                                                                                  Common.common_no_title,
+                                                                                                  Common.common_no_title,
+                                                                                                  Common.common_no_icon,
+                                                                                                  DatabaseHelper.FeatureDefinitionConditionAffinitys.ConditionAffinityVeilImmunity,
+                                                                                                  a =>
+                                                                                                  {
+                                                                                                      a.conditionType = DatabaseHelper.ConditionDefinitions.ConditionDarkness.name;
+                                                                                                  }
+                                                                                                  );
+
+            devils_sight = Helpers.FeatureSetBuilder.createFeatureSet("WarlockDevilsSightInvocation",
+                                                            "",
+                                                            "Feature/&WarlockDevilsSightInvocationTitle",
+                                                            "Feature/&WarlockDevilsSightInvocationDescription",
+                                                            false,
+                                                            FeatureDefinitionFeatureSet.FeatureSetMode.Union,
+                                                            false,
+                                                            immunity,
+                                                            DatabaseHelper.FeatureDefinitionSenses.SenseDarkvision24
+                                                            );
+
+        }
+
+
+        static void createBeguilingInfluence()
+        {
+           beguiling_influence = Helpers.ProficiencyBuilder.CreateSkillsProficiency("WarlockBeguilingInfluenceInvocation",
+                                                                                    "",
+                                                                                    "Feature/&WarlockBeguilingInfluenceInvocationTitle",
+                                                                                    "Feature/&WarlockBeguilingInfluenceInvocationlDescription",
+                                                                                    Helpers.Skills.Deception, Helpers.Skills.Persuasion
+                                                                                    );
+        }
+
+
+        static void createBookOfEldritchSecrets()
+        {
+            var invocations_levels = new int[] {5, 7, 9, 12, 15, 18 };
+
+            foreach (var lvl in invocations_levels)
+            {
+                var feature = Helpers.ExtraSpellSelectionBuilder.createExtraSpellSelection("WarlockClassBookOfEldritchSecretsInvocation" + lvl.ToString(),
+                                                                                               "",
+                                                                                               "Feature/&WarlockClassBookOfEldritchSecretsInvocationTitle",
+                                                                                               "Feature/&WarlockClassBookOfEldritchSecretsInvocationDescription",
+                                                                                               warlock_class,
+                                                                                               lvl,
+                                                                                               1,
+                                                                                               DatabaseHelper.SpellListDefinitions.SpellListWizard
+                                                                                               );
+                book_of_secrets[lvl] = feature;
+            }
         }
 
 
