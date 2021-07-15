@@ -30,18 +30,27 @@ Feature/&WarlockOtherWordlyLeapInvocationsTitle	Otherworldly Leap
 Feature/&WarlockOtherWordlyLeapInvocationsDescription	You can cast jump on yourself at will, without expending a spell slot or material components.
 Feature/&WarlockAscendantStepInvocationsTitle	Ascendant Step
 Feature/&WarlockAscendantStepInvocationsDescription	You can cast levitate on yourself at will, without expending a spell slot or material components.
-Feature/&WarlockClassPactBoonTitle	Pact Boon
-Feature/&WarlockClassPactBoonDescription	At 3rd level, your otherworldly patron bestows a gift upon you for your loyal service.
-Feature/&WarlockClassPactOfBladeTitle	Pact of the Blade
-Feature/&WarlockClassPactOfBladeDescription	You gain proficiency with all melee weapons. In addition, every melee weapon you hold counts as magical for purpose of overcoming resistance and immunity to nonmagical attacks and damage.
-Feature/&WarlockClassPactOfTomeTitle	Pact of the Tome
-Feature/&WarlockClassPactOfTomeDescription	You learn three cantrips from any class's spell list (the three needn't be from the same list). They don't count against your number of cantrips known.
 Feature/&WarlockClassBookOfEldritchSecretsInvocationTitle	Book of Eldritch Secrets
 Feature/&WarlockClassBookOfEldritchSecretsInvocationDescription	You can add one spell from wizard spells list to your list of your spells known.
 Feature/&WarlockBeguilingInfluenceInvocationTitle	Beguiling Influence
 Feature/&WarlockBeguilingInfluenceInvocationDescription	You gain proficiency in the Deception and Persuasion skills.
 Feature/&WarlockDevilsSightInvocationTitle	Devil's Sight
 Feature/&WarlockDevilsSightInvocationDescription	You can see normally in darkness, both magical and nonmagical, to a distance of 120 feet.
+Feature/&WarlockThirstingBladeInvocationTitle	Thirsting Blade
+Feature/&WarlockThirstingBladeInvocationDescription	You can attack with a melee weapon twice, instead of once, whenever you take the Attack action on your turn.
+Feature/&WarlockEldritchArcheryInvocationTitle	Eldritch Archery
+Feature/&WarlockEldritchArcheryInvocationDescription		You can attack with a bow twice, instead of once, whenever you take the Attack action on your turn.
+Feature/&WarlockEldritchStrikeInvocationTitle	Eldritch Strike
+Feature/&WarlockEldritchStrikeInvocationDescription	Once per turn when you hit a creature with a melee weapon (if you have Pact of The Blade boon), or with an arrow (if you have Pact of the Arrow boon), you can expend a warlock spell slot to deal an extra 1d10 force damage to the target per level of the spell slot, the target is also knocked prone.
+Reaction/&SpendWarlockEldritchStrikeInvocationPowerReactDescription	Expend warlock spell slot to deal 1d10 force damage per slot level and knock target prone.
+Feature/&WarlockClassPactBoonTitle	Pact Boon
+Feature/&WarlockClassPactBoonDescription	At 3rd level, your otherworldly patron bestows a gift upon you for your loyal service.
+Feature/&WarlockClassPactOfBladeTitle	Pact of the Blade
+Feature/&WarlockClassPactOfBladeDescription	You gain proficiency with all melee weapons. In addition, every melee weapon you hold counts as magical for purpose of overcoming resistance and immunity to nonmagical attacks and damage.
+Feature/&WarlockClassPactOfTomeTitle	Pact of the Tome
+Feature/&WarlockClassPactOfTomeDescription	You learn three cantrips from any class's spell list (the three needn't be from the same list). They don't count against your number of cantrips known.
+Feature/&WarlockClassPactOfArrowTitle	Pact of the Arrow
+Feature/&WarlockClassPactOfArrowDescription	You gain proficiency with all bows. In  addition, every bow you hold counts as magical for purpose of overcoming resistance and immunity to nonmagical attacks and damage. You can also create arrows at will.
 Spell/&EldritchBlastTitle	Eldritch Blast
 Spell/&EldritchBlastDescription	A beam of crackling energy streaks toward a creature within range. Make a ranged spell attack against the target. On a hit, the target takes 1d10 force damage.
 Subclass/&WarlockSubclassPatronOfNatureTitle	Patron of Nature

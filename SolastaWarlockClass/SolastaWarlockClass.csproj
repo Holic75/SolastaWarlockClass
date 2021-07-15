@@ -67,7 +67,7 @@
 
 	<ItemGroup>
 		<Reference Include="SolastaExtraContent">
-		  <HintPath>..\..\..\..\Program Files (x86)\Steam\steamapps\common\Slasta_COTM\Mods\SolastaExtraContent\SolastaExtraContent.dll</HintPath>
+            <HintPath>$([System.IO.Path]::Combine($(SolastaInstallDir), 'Mods\SolastaExtraContent\SolastaExtraContent.dll'))</HintPath>
 		</Reference>
 		<Reference Include="Unity.Addressables">
 			<HintPath>$([System.IO.Path]::Combine($(SolastaInstallDir), 'Solasta_Data\Managed\Unity.Addressables.dll'))</HintPath>

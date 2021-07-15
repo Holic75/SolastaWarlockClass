@@ -40,18 +40,42 @@ namespace SolastaWarlockClass
         static public FeatureDefinitionFeatureSet pact_boon;
         static public NewFeatureDefinitions.FeatureDefinitionExtraSpellSelection pact_of_tome;
         static public FeatureDefinitionFeatureSet pact_of_blade;
+        static public FeatureDefinitionFeatureSet pact_of_arrow;
+        //static public FeatureDefinitionFeatureSet pact_of_aegis;
 
 
         static NewFeatureDefinitions.SpellWithCasterFeatureDependentEffects eldritch_blast;
         static NewFeatureDefinitions.SpellWithCasterFeatureDependentEffects repelling_eldritch_blast;
 
-
-        //pacts: Arrow - ranged weapons + infinite ammo
+        static public NewFeatureDefinitions.AttackModeExtraMainAttackWithSpecificWeaponType thirsting_blade;
+        static public NewFeatureDefinitions.AttackModeExtraMainAttackWithSpecificWeaponType eldritch_archery;
+        static public NewFeatureDefinitions.PowerWithRestrictions eldritch_smite;
         //invocations: 
         //blade and bolt  - bonus action attack after cantrip
-        //thirsting blade (+1 attack)
-        //eldrtich smite
-        //eldritch archery
+        static List<string> blade_pact_weapon_types = new List<string>()
+                                                        {
+                                                            Helpers.WeaponProficiencies.QuarterStaff,
+                                                            Helpers.WeaponProficiencies.Spear,
+                                                            Helpers.WeaponProficiencies.Mace,
+                                                            Helpers.WeaponProficiencies.Dagger,
+                                                            Helpers.WeaponProficiencies.Handaxe,
+                                                            Helpers.WeaponProficiencies.Club,
+                                                            Helpers.WeaponProficiencies.LongSword,
+                                                            Helpers.WeaponProficiencies.Rapier,
+                                                            Helpers.WeaponProficiencies.ShortSword,
+                                                            Helpers.WeaponProficiencies.GreatSword,
+                                                            Helpers.WeaponProficiencies.Scimitar,
+                                                            Helpers.WeaponProficiencies.MorningStar,
+                                                            Helpers.WeaponProficiencies.BattleAxe,
+                                                            Helpers.WeaponProficiencies.Warhammer
+                                                        };
+        static List<string> arrow_pact_weapon_types = new List<string>()
+                                                        {
+                                                            Helpers.WeaponProficiencies.Longbow,
+                                                            Helpers.WeaponProficiencies.Shortbow
+                                                        };
+
+
 
         //patrons
         //fiend, dragon?, 
@@ -290,6 +314,7 @@ namespace SolastaWarlockClass
             var description_string = "Feature/&WarlockClassPactBoonDescription";
             createPactOfTome();
             createPactOfBlade();
+            createPactOfArrow();
 
             pact_boon = Helpers.FeatureSetBuilder.createFeatureSet("WarlockClassPactBoon",
                                                                     "",
@@ -299,8 +324,62 @@ namespace SolastaWarlockClass
                                                                     FeatureDefinitionFeatureSet.FeatureSetMode.Exclusion,
                                                                     true,
                                                                     pact_of_blade,
-                                                                    pact_of_tome
+                                                                    pact_of_tome,
+                                                                    pact_of_arrow
                                                                     );
+        }
+
+
+        static void createPactOfArrow()
+        {
+            var title_string = "Feature/&WarlockClassPactOfArrowTitle";
+            var description_string = "Feature/&WarlockClassPactOfArrowDescription";
+
+            var proficiency = Helpers.ProficiencyBuilder.CreateWeaponProficiency("WarlockClassPactOfArrowProficiency",
+                                                                                 "",
+                                                                                 Common.common_no_title,
+                                                                                 Common.common_no_title,
+                                                                                 Helpers.WeaponProficiencies.Longbow,
+                                                                                 Helpers.WeaponProficiencies.Shortbow
+                                                                                 );
+            var magic_tag = Helpers.FeatureBuilder<NewFeatureDefinitions.AddAttackTagForSpecificWeaponType>.createFeature("WarlockClassPactOfArrowMagicTag",
+                                                                                                                         "",
+                                                                                                                         Common.common_no_title,
+                                                                                                                         Common.common_no_title,
+                                                                                                                         Common.common_no_icon,
+                                                                                                                         a =>
+                                                                                                                         {
+                                                                                                                             a.weaponTypes = arrow_pact_weapon_types;
+                                                                                                                             a.tag = "Magical";
+                                                                                                                         }
+                                                                                                                         );
+
+            var power = Helpers.CopyFeatureBuilder<FeatureDefinitionPower>.createFeatureCopy("WarlockClassPactOfArrowPower",
+                                                                                             "",
+                                                                                             title_string,
+                                                                                             description_string,
+                                                                                             null,
+                                                                                             DatabaseHelper.FeatureDefinitionPowers.PowerFunctionEndlessQuiver,
+                                                                                             a =>
+                                                                                             {
+                                                                                                 a.rechargeRate = RuleDefinitions.RechargeRate.OneMinute;
+                                                                                                 a.fixedUsesPerRecharge = 10;
+                                                                                             }
+                                                                                             );
+
+
+            pact_of_arrow = Helpers.FeatureSetBuilder.createFeatureSet("WarlockClassPactOfArrow",
+                                                        "",
+                                                        title_string,
+                                                        description_string,
+                                                        false,
+                                                        FeatureDefinitionFeatureSet.FeatureSetMode.Union,
+                                                        false,
+                                                        proficiency,
+                                                        magic_tag,
+                                                        power
+                                                        );
+
         }
 
 
@@ -329,23 +408,7 @@ namespace SolastaWarlockClass
                                                                                                                          Common.common_no_icon,
                                                                                                                          a =>
                                                                                                                          {
-                                                                                                                             a.weaponTypes = new List<string>()
-                                                                                                                             {
-                                                                                                                                 Helpers.WeaponProficiencies.QuarterStaff,
-                                                                                                                                 Helpers.WeaponProficiencies.Spear,
-                                                                                                                                 Helpers.WeaponProficiencies.Mace,
-                                                                                                                                 Helpers.WeaponProficiencies.Dagger,
-                                                                                                                                 Helpers.WeaponProficiencies.Handaxe,
-                                                                                                                                 Helpers.WeaponProficiencies.Club,
-                                                                                                                                 Helpers.WeaponProficiencies.LongSword,
-                                                                                                                                 Helpers.WeaponProficiencies.Rapier,
-                                                                                                                                 Helpers.WeaponProficiencies.ShortSword,
-                                                                                                                                 Helpers.WeaponProficiencies.GreatSword,
-                                                                                                                                 Helpers.WeaponProficiencies.Scimitar,
-                                                                                                                                 Helpers.WeaponProficiencies.MorningStar,
-                                                                                                                                 Helpers.WeaponProficiencies.BattleAxe,
-                                                                                                                                 Helpers.WeaponProficiencies.Warhammer
-                                                                                                                             };
+                                                                                                                             a.weaponTypes = blade_pact_weapon_types;
                                                                                                                              a.tag = "Magical";
                                                                                                                          }
                                                                                                                          );
@@ -437,7 +500,9 @@ namespace SolastaWarlockClass
             createBookOfEldritchSecrets();
             createBeguilingInfluence();
             createDevilsSight();
-
+            createThirstingBlade();
+            createEldritchArchery();
+            createEldritchStrike();
             var invocations_features = new List<(FeatureDefinition, int)>()
             {
                 (agonizing_blast, 0),
@@ -449,14 +514,12 @@ namespace SolastaWarlockClass
                 (armor_of_shadow, 0),
                 (eldritch_sight, 0),
                 (fiendish_vigor, 0),
+                (eldritch_archery, 5),
+                (thirsting_blade, 5),
+                (eldritch_smite, 5),
                 (otherworldy_leap, 9),
                 (ascendant_step, 9)
             };
-
-            foreach (var kv in book_of_secrets)
-            {
-                invocations_features.Add((kv.Value, kv.Key));
-            }
 
 
             var invocations_levels = new int[] { 1, 2, 5, 7, 9, 12, 15, 18 };
@@ -472,8 +535,161 @@ namespace SolastaWarlockClass
                                                                             true
                                                                             );
                 feature.featureSet = invocations_features.Where(f => f.Item2 <= lvl).Select(f => f.Item1).ToList();
+                if (book_of_secrets.ContainsKey(lvl))
+                {
+                    feature.featureSet.Add(book_of_secrets[lvl]);
+                }
                 invocations[lvl] = feature;
             }
+        }
+
+
+        static void createEldritchStrike()
+        {
+            string title_string = "Feature/&WarlockEldritchStrikeInvocationTitle";
+            string description_string = "Feature/&WarlockEldritchStrikeInvocationDescription";
+            string use_react_description = "Reaction/&SpendWarlockEldritchStrikeInvocationPowerReactDescription";
+            string use_react_title = "Reaction/&CommonUsePowerReactTitle";
+
+            var sprite = SolastaModHelpers.CustomIcons.Tools.storeCustomIcon("EldritchStrikePowerImage",
+                                                    $@"{UnityModManagerNet.UnityModManager.modsPath}/SolastaWarlockClass/Sprites/EldritchSmite.png",
+                                                    128, 64);
+
+            var used_condition = Helpers.ConditionBuilder.createConditionWithInterruptions("WarlockEldritchStrikeInvocationUsedCondition",
+                                                                                        "",
+                                                                                        "",
+                                                                                        "",
+                                                                                        null,
+                                                                                        DatabaseHelper.ConditionDefinitions.ConditionDummy,
+                                                                                        new RuleDefinitions.ConditionInterruption[] { RuleDefinitions.ConditionInterruption.AnyBattleTurnEnd }
+                                                                                        );
+            NewFeatureDefinitions.ConditionsData.no_refresh_conditions.Add(used_condition);
+
+            Dictionary<int, EffectDescription> lvl_effects = new Dictionary<int, EffectDescription>();
+
+            for (int i = 1; i <= 9; i += 2)
+            {
+                var effect = new EffectDescription();
+                effect.Copy(DatabaseHelper.FeatureDefinitionPowers.PowerDomainBattleDecisiveStrike.EffectDescription);
+                effect.DurationParameter = 1;
+                effect.DurationType = RuleDefinitions.DurationType.Instantaneous;
+                effect.SetSavingThrowDifficultyAbility(Helpers.Stats.Charisma);
+                effect.SavingThrowAbility = Helpers.Stats.Charisma;
+                effect.hasSavingThrow = false;
+                effect.SetDifficultyClassComputation(RuleDefinitions.EffectDifficultyClassComputation.AbilityScoreAndProficiency);
+                effect.EffectForms.Clear();
+
+                var effect_form = new EffectForm();
+                effect_form.DamageForm = new DamageForm();
+                effect_form.FormType = EffectForm.EffectFormType.Damage;
+                effect_form.DamageForm.dieType = RuleDefinitions.DieType.D10;
+                effect_form.DamageForm.diceNumber = 1 + (i - 1) / 2;
+                effect_form.DamageForm.damageType = Helpers.DamageTypes.Force;
+                effect.EffectForms.Add(effect_form);
+
+                effect_form = new EffectForm();
+                effect_form.motionForm = new MotionForm();
+                effect_form.FormType = EffectForm.EffectFormType.Motion;
+                effect_form.motionForm.type = MotionForm.MotionType.FallProne;
+                effect_form.motionForm.distance = 0;
+                effect_form.hasSavingThrow = false;
+                effect.EffectForms.Add(effect_form);
+
+                effect_form = new EffectForm();
+                effect_form.ConditionForm = new ConditionForm();
+                effect_form.FormType = EffectForm.EffectFormType.Condition;
+                effect_form.ConditionForm.Operation = ConditionForm.ConditionOperation.Add;
+                effect_form.ConditionForm.ConditionDefinition = used_condition;
+                effect_form.conditionForm.applyToSelf = true;
+
+                lvl_effects[i] = effect;
+
+            }
+
+            var power = Helpers.GenericPowerBuilder<NewFeatureDefinitions.PowerWithRestrictionsAndCasterLevelDependentEffect>
+                                                        .createPower("WarlockEldritchStrikeInvocation",
+                                                                     "",
+                                                                     title_string,
+                                                                     description_string,
+                                                                     sprite,
+                                                                     lvl_effects[1],
+                                                                     RuleDefinitions.ActivationTime.OnAttackHit,
+                                                                     4,
+                                                                     RuleDefinitions.UsesDetermination.Fixed,
+                                                                     RuleDefinitions.RechargeRate.SpellSlot
+                                                                     );
+            power.minCustomEffectLevel = 3;
+            power.levelEffectList = new List<(int, EffectDescription)>
+            {
+                (4, lvl_effects[3]),
+                (6, lvl_effects[5]),
+                (8, lvl_effects[7]),
+                (20, lvl_effects[9])
+            };
+            power.restrictions = new List<NewFeatureDefinitions.IRestriction>()
+                                            {
+                                                new NewFeatureDefinitions.AndRestriction(
+                                                    new NewFeatureDefinitions.OrRestriction(new NewFeatureDefinitions.SpecificWeaponInMainHandRestriction(blade_pact_weapon_types), new NewFeatureDefinitions.HasFeatureRestriction(pact_of_blade)),
+                                                    new NewFeatureDefinitions.OrRestriction(new NewFeatureDefinitions.SpecificWeaponInMainHandRestriction(arrow_pact_weapon_types), new NewFeatureDefinitions.HasFeatureRestriction(pact_of_arrow))
+                                                ),
+                                                new NewFeatureDefinitions.NoConditionRestriction(used_condition)
+                                            };
+         
+
+            Helpers.StringProcessing.addPowerReactStrings(power, title_string, use_react_description,
+                                            use_react_title, use_react_description, "SpendPower");
+            eldritch_smite = power;
+        }
+
+        static void createThirstingBlade()
+        {
+            thirsting_blade = Helpers.FeatureBuilder<NewFeatureDefinitions.AttackModeExtraMainAttackWithSpecificWeaponType>
+                                                                        .createFeature("WarlockThirstingBladeInvocation",
+                                                                                        "",
+                                                                                        "Feature/&WarlockThirstingBladeInvocationTitle",
+                                                                                        "Feature/&WarlockThirstingBladeInvocationDescription",
+                                                                                        Common.common_no_icon,
+                                                                                        a =>
+                                                                                        {
+                                                                                            a.weaponTypes = new List<string>()
+                                                                                            {
+                                                                                                Helpers.WeaponProficiencies.QuarterStaff,
+                                                                                                Helpers.WeaponProficiencies.Spear,
+                                                                                                Helpers.WeaponProficiencies.Mace,
+                                                                                                Helpers.WeaponProficiencies.Dagger,
+                                                                                                Helpers.WeaponProficiencies.Handaxe,
+                                                                                                Helpers.WeaponProficiencies.Club,
+                                                                                                Helpers.WeaponProficiencies.LongSword,
+                                                                                                Helpers.WeaponProficiencies.Rapier,
+                                                                                                Helpers.WeaponProficiencies.ShortSword,
+                                                                                                Helpers.WeaponProficiencies.GreatSword,
+                                                                                                Helpers.WeaponProficiencies.Scimitar,
+                                                                                                Helpers.WeaponProficiencies.MorningStar,
+                                                                                                Helpers.WeaponProficiencies.BattleAxe,
+                                                                                                Helpers.WeaponProficiencies.Warhammer
+                                                                                            };
+                                                                                        }
+                                                                                        );
+        }
+
+
+        static void createEldritchArchery()
+        {
+            eldritch_archery = Helpers.FeatureBuilder<NewFeatureDefinitions.AttackModeExtraMainAttackWithSpecificWeaponType>
+                                                                        .createFeature("WarlockEldritchArcheryInvocation",
+                                                                                        "",
+                                                                                        "Feature/&WarlockEldritchArcheryInvocationTitle",
+                                                                                        "Feature/&WarlockEldritchArcheryInvocationDescription",
+                                                                                        Common.common_no_icon,
+                                                                                        a =>
+                                                                                        {
+                                                                                            a.weaponTypes = new List<string>()
+                                                                                            {
+                                                                                                Helpers.WeaponProficiencies.Shortbow,
+                                                                                                Helpers.WeaponProficiencies.Longbow,
+                                                                                            };
+                                                                                        }
+                                                                                        );
         }
 
 

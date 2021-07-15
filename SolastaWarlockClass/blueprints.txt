@@ -162,3 +162,11 @@ WarlockClassBookOfEldritchSecretsInvocation18	e4b647fb-e16b-4038-ba40-ecab048bcc
 WarlockBeguilingInfluenceInvocation	9eee2112-7772-4825-b41e-8179943f809c
 WarlockDevilsSightImmunityDarknessInvocation	6fd7617e-ce7a-49a5-8cbb-653f44b4c8ae
 WarlockDevilsSightInvocation	a93c9461-82a6-47b1-a2c1-96123f87ec34
+WarlockThirstingBladeInvocation	fca049dd-f543-4525-bdbc-0966c23ad7a5
+WarlockEldritchArcheryInvocation	96af0036-6fee-4c86-91a3-1b9ab3ed68bc
+WarlockEldritchStrikeInvocationUsedCondition	8a9ade38-ca31-4289-b254-092654b00694
+WarlockEldritchStrikeInvocation	56f23eec-74b3-47fc-96fd-b2ce3cef1672
+WarlockClassPactOfArrowProficiency	c9ed950f-eebb-4bea-a6f6-c3dad32057ad
+WarlockClassPactOfArrowMagicTag	8c661544-f2c6-42ef-9d27-4ba8184a07f7
+WarlockClassPactOfArrowPower	db067666-a5db-4555-9b6d-8a37dc334cc5
+WarlockClassPactOfArrow	a444fa6a-fcb6-4e1e-8f8e-bf4ca667b2c9
