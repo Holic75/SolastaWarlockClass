@@ -30,7 +30,7 @@ Feature/&WarlockOtherWordlyLeapInvocationsTitle	Otherworldly Leap
 Feature/&WarlockOtherWordlyLeapInvocationsDescription	You can cast jump on yourself at will, without expending a spell slot or material components.
 Feature/&WarlockAscendantStepInvocationsTitle	Ascendant Step
 Feature/&WarlockAscendantStepInvocationsDescription	You can cast levitate on yourself at will, without expending a spell slot or material components.
-Feature/&WarlockClassBookOfEldritchSecretsInvocationTitle	Book of Eldritch Secrets
+Feature/&WarlockClassBookOfEldritchSecretsInvocationTitle	Eldritch Secrets
 Feature/&WarlockClassBookOfEldritchSecretsInvocationDescription	You can add one spell from wizard spells list to your list of your spells known.
 Feature/&WarlockBeguilingInfluenceInvocationTitle	Beguiling Influence
 Feature/&WarlockBeguilingInfluenceInvocationDescription	You gain proficiency in the Deception and Persuasion skills.
@@ -39,7 +39,7 @@ Feature/&WarlockDevilsSightInvocationDescription	You can see normally in darknes
 Feature/&WarlockThirstingBladeInvocationTitle	Thirsting Blade
 Feature/&WarlockThirstingBladeInvocationDescription	You can attack with a melee weapon twice, instead of once, whenever you take the Attack action on your turn.
 Feature/&WarlockEldritchArcheryInvocationTitle	Eldritch Archery
-Feature/&WarlockEldritchArcheryInvocationDescription		You can attack with a bow twice, instead of once, whenever you take the Attack action on your turn.
+Feature/&WarlockEldritchArcheryInvocationDescription	You can attack with a bow twice, instead of once, whenever you take the Attack action on your turn.
 Feature/&WarlockEldritchStrikeInvocationTitle	Eldritch Strike
 Feature/&WarlockEldritchStrikeInvocationDescription	Once per turn when you hit a creature with a melee weapon (if you have Pact of The Blade boon), or with an arrow (if you have Pact of the Arrow boon), you can expend a warlock spell slot to deal an extra 1d10 force damage to the target per level of the spell slot, the target is also knocked prone.
 Reaction/&SpendWarlockEldritchStrikeInvocationPowerReactDescription	Expend warlock spell slot to deal 1d10 force damage per slot level and knock target prone.
@@ -53,5 +53,9 @@ Feature/&WarlockClassPactOfArrowTitle	Pact of the Arrow
 Feature/&WarlockClassPactOfArrowDescription	You gain proficiency with all bows. In  addition, every bow you hold counts as magical for purpose of overcoming resistance and immunity to nonmagical attacks and damage. You can also create arrows at will.
 Spell/&EldritchBlastTitle	Eldritch Blast
 Spell/&EldritchBlastDescription	A beam of crackling energy streaks toward a creature within range. Make a ranged spell attack against the target. On a hit, the target takes 1d10 force damage.
-Subclass/&WarlockSubclassPatronOfNatureTitle	Patron of Nature
-Subclass/&WarlockSubclassPatronOfNatureDescription	Warlocks from the Patron of Nature endeavor to protect the balance that exists between all living things. Members of this Patron are more at home in the wilderness than a rowdy tavern or royal court. They feel the connection that binds all life together and sustain its harmony.\nMost of these bards revere the forces of nature themselves, but some devote themselves to Aubori or one of the many nature gods in the multiverse. While all life is precious to Patron of Nature bards, they also know that nature can provide sustenance and utility to those who only take life when needed.\nWhen a member of this Patron performs, it can seem as if nature itself joins in with rustling leaves, whistling winds, crashing waves, and singing birds. They harm only those who needlessly take lives, despoil nature, or use dark magic to go against nature's balance. For their protection of nature, they receive magical energy in return.
+Subclass/&WarlockSubclassPatronFiendTitle	Fiend Patron
+Subclass/&WarlockSubclassPatronFiendDescription	You have made a pact with a fiend from the lower planes of existence, a being whose aims are evil, even if you strive against those aims. Such beings desire the corruption or destruction of all things, ultimately including you. Fiends powerful enough to forge a pact include demon lords such as Demogorgon, Orcus, Fraz'Urb-luu, and Baphomet; archdevils such as Asmodeus, Dispater, Mephistopheles, and Belial; pit fiends and balors that are especially mighty; and ultroloths and other lords of the yugoloths.
+Feature/&WarlockFiendSubclassFiendSpellsTitle	Expanded Spell List
+Feature/&WarlockFiendSubclassFiendSpellsDescription	The Fiend lets you choose from an expanded list of spells when you learn a warlock spell. The following spells are added to the warlock spell list for you.\n1st level: burning hands, bane\n2nd level: blindness, scorching ray\n3rd level: fireball, stinking cloud\n4th level: fire shield, wall of fire\n5th level: flame strike, cloudkill.
+Feature/&WarlockFiendSubclassDarkOnesBlessingTitle	Dark One's Blessing
+Feature/&WarlockFiendSubclassDarkOnesBlessingDescription	Starting at 1st level, when you reduce a hostile creature to 0 hit points, you gain temporary hit points equal to your Charisma modifier + your warlock level (minimum of 1).

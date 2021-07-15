@@ -79,7 +79,8 @@ namespace SolastaWarlockClass
 
         //patrons
         //fiend, dragon?, 
-
+        static public FeatureDefinitionMagicAffinity fiend_spells;
+        static public NewFeatureDefinitions.InitiatorApplyPowerToSelfOnTargetSlain dark_ones_blessing;
 
 
         protected WarlockClassBuilder(string name, string guid) : base(name, guid)
@@ -277,9 +278,8 @@ namespace SolastaWarlockClass
                                                                  1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
             warlock_spellcasting.SetSlotsRecharge(RuleDefinitions.RechargeRate.ShortRest);
 
-
-            createInvocations();
             createPactBoon();
+            createInvocations();
             Definition.FeatureUnlocks.Clear();
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(saving_throws, 1));
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(armor_proficiency, 1));
@@ -639,6 +639,7 @@ namespace SolastaWarlockClass
             Helpers.StringProcessing.addPowerReactStrings(power, title_string, use_react_description,
                                             use_react_title, use_react_description, "SpendPower");
             eldritch_smite = power;
+            NewFeatureDefinitions.FeatureData.addFeatureRestrictions(eldritch_smite, new NewFeatureDefinitions.HasAnyFeatureFromListRestriction(pact_of_blade, pact_of_arrow));
         }
 
         static void createThirstingBlade()
@@ -670,6 +671,7 @@ namespace SolastaWarlockClass
                                                                                             };
                                                                                         }
                                                                                         );
+           NewFeatureDefinitions.FeatureData.addFeatureRestrictions(thirsting_blade, new NewFeatureDefinitions.HasFeatureRestriction(pact_of_blade));
         }
 
 
@@ -690,6 +692,7 @@ namespace SolastaWarlockClass
                                                                                             };
                                                                                         }
                                                                                         );
+            NewFeatureDefinitions.FeatureData.addFeatureRestrictions(eldritch_archery, new NewFeatureDefinitions.HasFeatureRestriction(pact_of_arrow));
         }
 
 
@@ -727,7 +730,7 @@ namespace SolastaWarlockClass
            beguiling_influence = Helpers.ProficiencyBuilder.CreateSkillsProficiency("WarlockBeguilingInfluenceInvocation",
                                                                                     "",
                                                                                     "Feature/&WarlockBeguilingInfluenceInvocationTitle",
-                                                                                    "Feature/&WarlockBeguilingInfluenceInvocationlDescription",
+                                                                                    "Feature/&WarlockBeguilingInfluenceInvocationDescription",
                                                                                     Helpers.Skills.Deception, Helpers.Skills.Persuasion
                                                                                     );
         }
@@ -749,6 +752,7 @@ namespace SolastaWarlockClass
                                                                                                DatabaseHelper.SpellListDefinitions.SpellListWizard
                                                                                                );
                 book_of_secrets[lvl] = feature;
+                NewFeatureDefinitions.FeatureData.addFeatureRestrictions(feature, new NewFeatureDefinitions.HasFeatureRestriction(pact_of_tome));
             }
         }
 
@@ -798,7 +802,7 @@ namespace SolastaWarlockClass
                                                                                    repelling_blast_description_string,
                                                                                    repelling_eldritch_blast);
 
-
+            NewFeatureDefinitions.FeatureData.addFeatureRestrictions(repelling_blast, new NewFeatureDefinitions.CanCastSpellRestriction(eldritch_blast, false));
 
 
         }
@@ -838,6 +842,8 @@ namespace SolastaWarlockClass
             effect.EffectForms.Clear();
             effect.effectAdvancement.Clear();
             effect.targetParameter = 1;
+            //effect.durationParameter = 1;
+            //effect.durationType = RuleDefinitions.DurationType.Round;
 
             var effect_advancement = new EffectAdvancement();
             effect_advancement.Clear();
@@ -884,12 +890,15 @@ namespace SolastaWarlockClass
             condition_form.ConditionForm = new ConditionForm();
             condition_form.FormType = EffectForm.EffectFormType.Condition;
             condition_form.ConditionForm.Operation = ConditionForm.ConditionOperation.Add;
-            condition_form.ConditionForm.ConditionDefinition = DatabaseHelper.ConditionDefinitions.ConditionHindered;
+            condition_form.ConditionForm.ConditionDefinition = DatabaseHelper.ConditionDefinitions.ConditionHindered_By_Frost;
+            condition_form.createdByCharacter = true;
 
             var mire_effect = Helpers.Misc.addEffectFormsToEffectDescription(effect, condition_form);
             var agonizing_mire_effect = Helpers.Misc.addEffectFormsToEffectDescription(agonizing_effect, condition_form);
-            mire_effect.DurationParameter = 1;
-            agonizing_mire_effect.DurationParameter = 1;
+            mire_effect.durationParameter = 1;
+            mire_effect.durationType = RuleDefinitions.DurationType.Round;
+            agonizing_mire_effect.durationParameter = 1;
+            agonizing_mire_effect.durationType = RuleDefinitions.DurationType.Round;
 
             eldritch_blast.featuresEffectList = new List<(List<FeatureDefinition>, EffectDescription)>()
             {
@@ -898,22 +907,126 @@ namespace SolastaWarlockClass
                 (new List<FeatureDefinition>{miring_blast}, mire_effect),
             };
 
+            NewFeatureDefinitions.FeatureData.addFeatureRestrictions(agonizing_blast, new NewFeatureDefinitions.CanCastSpellRestriction(eldritch_blast, false));
+            NewFeatureDefinitions.FeatureData.addFeatureRestrictions(miring_blast, new NewFeatureDefinitions.CanCastSpellRestriction(eldritch_blast, false));
         }
 
 
-        static CharacterSubclassDefinition createNatureCollege()
+        static CharacterSubclassDefinition createFiendPatron()
         {
             var gui_presentation = new GuiPresentationBuilder(
-                    "Subclass/&WarlockSubclassPatronOfNatureDescription",
-                    "Subclass/&WarlockSubclassPatronOfNatureTitle")
-                    .SetSpriteReference(DatabaseHelper.CharacterSubclassDefinitions.TraditionGreenmage.GuiPresentation.SpriteReference)
+                    "Subclass/&WarlockSubclassPatronFiendDescription",
+                    "Subclass/&WarlockSubclassPatronFiendTitle")
+                    .SetSpriteReference(DatabaseHelper.CharacterSubclassDefinitions.TraditionShockArcanist.GuiPresentation.SpriteReference)
                     .Build();
 
-            CharacterSubclassDefinition definition = new CharacterSubclassDefinitionBuilder("WarlockSubclassPatronOfNature", "911ed94e-3664-4916-b92b-909f0382b3a2")
+            createFiendSpells();
+            createDarkOnesBlessing();
+            CharacterSubclassDefinition definition = new CharacterSubclassDefinitionBuilder("WarlockSubclassPatronFiend", "911ed94e-3664-4916-b92b-909f0382b3a2")
                                                                                             .SetGuiPresentation(gui_presentation)
+                                                                                            .AddFeatureAtLevel(fiend_spells, 1)
+                                                                                            .AddFeatureAtLevel(dark_ones_blessing, 1)
                                                                                             .AddToDB();
 
             return definition;
+        }
+
+
+        static void createDarkOnesBlessing()
+        {
+            string title_string = "Feature/&WarlockFiendSubclassDarkOnesBlessingTitle";
+            string description_string = "Feature/&WarlockFiendSubclassDarkOnesBlessingDescription";
+
+            var effect = new EffectDescription();
+            effect.Copy(DatabaseHelper.FeatureDefinitionPowers.PowerDomainBattleDivineWrath.EffectDescription);
+            effect.EffectForms.Clear();
+            var effect_form = new EffectForm();
+            effect_form.temporaryHitPointsForm = new TemporaryHitPointsForm();
+            effect_form.FormType = EffectForm.EffectFormType.TemporaryHitPoints;
+            effect_form.temporaryHitPointsForm.dieType = RuleDefinitions.DieType.D1;
+            effect_form.temporaryHitPointsForm.diceNumber = 1;
+            effect_form.applyAbilityBonus = true;
+            effect_form.applyLevel = EffectForm.LevelApplianceType.Multiply;
+            effect_form.levelMultiplier = 1;
+            effect.EffectForms.Add(effect_form);
+
+
+            var power = Helpers.PowerBuilder.createPower("WarlockFiendSubclassDarkOnesBlessingPower",
+                                                     "",
+                                                     title_string,
+                                                     description_string,
+                                                     null,
+                                                     DatabaseHelper.FeatureDefinitionPowers.PowerDomainBattleDivineWrath,
+                                                     effect,
+                                                     RuleDefinitions.ActivationTime.NoCost,
+                                                     1,
+                                                     RuleDefinitions.UsesDetermination.Fixed,
+                                                     RuleDefinitions.RechargeRate.AtWill,
+                                                     show_casting: false,
+                                                     ability: Helpers.Stats.Charisma);
+
+            dark_ones_blessing = Helpers.FeatureBuilder<NewFeatureDefinitions.InitiatorApplyPowerToSelfOnTargetSlain>
+                                                                                    .createFeature("WarlockFiendSubclassDarkOnesBlessing",
+                                                                                                    "",
+                                                                                                    title_string,
+                                                                                                    description_string,
+                                                                                                    Common.common_no_icon,
+                                                                                                    f =>
+                                                                                                    {
+                                                                                                        f.power = power;
+                                                                                                        f.scaleClass = warlock_class;
+                                                                                                    }
+                                                                                                    );
+        }
+
+
+        static void createFiendSpells()
+        {
+            var spelllist = Helpers.SpelllistBuilder.create9LevelSpelllist("WarlockFiendSubclassFiendSpellsSpelllist", "", "",
+                                                                            new List<SpellDefinition>
+                                                                            {
+
+                                                                            },
+                                                                            new List<SpellDefinition>
+                                                                            {
+                                                                                                        DatabaseHelper.SpellDefinitions.BurningHands,
+                                                                                                        DatabaseHelper.SpellDefinitions.Bane,
+                                                                            },
+                                                                            new List<SpellDefinition>
+                                                                            {
+                                                                                                        DatabaseHelper.SpellDefinitions.Blindness,
+                                                                                                        DatabaseHelper.SpellDefinitions.ScorchingRay,
+                                                                            },
+                                                                            new List<SpellDefinition>
+                                                                            {
+                                                                                                        DatabaseHelper.SpellDefinitions.Fireball,
+                                                                                                        DatabaseHelper.SpellDefinitions.StinkingCloud,
+                                                                            },
+                                                                            new List<SpellDefinition>
+                                                                            {
+                                                                                                        DatabaseHelper.SpellDefinitions.FireShield,
+                                                                                                        DatabaseHelper.SpellDefinitions.WallOfFire,
+                                                                            },
+                                                                            new List<SpellDefinition>
+                                                                            {
+                                                                                                        DatabaseHelper.SpellDefinitions.FlameStrike,
+                                                                                                        DatabaseHelper.SpellDefinitions.CloudKill,
+                                                                            }
+                                                                            );
+
+            string title = "Feature/&WarlockFiendSubclassFiendSpellsTitle";
+            string description = "Feature/&WarlockFiendSubclassFiendSpellsDescription";
+            fiend_spells = Helpers.CopyFeatureBuilder<FeatureDefinitionMagicAffinity>.createFeatureCopy("WarlockFiendSubclassFiendSpells",
+                                                                                                                         "",
+                                                                                                                         title,
+                                                                                                                         description,
+                                                                                                                         null,
+                                                                                                                         DatabaseHelper.FeatureDefinitionMagicAffinitys.MagicAffinityGreenmageGreenMagicList,
+                                                                                                                         c =>
+                                                                                                                         {
+                                                                                                                             c.SetExtendedSpellList(spelllist);
+                                                                                                                         }
+                                                                                                                         );
         }
 
 
@@ -926,7 +1039,7 @@ namespace SolastaWarlockClass
                                           }
                                          );
 
-            WarlockFeatureDefinitionSubclassChoice.Subclasses.Add(createNatureCollege().Name);
+            WarlockFeatureDefinitionSubclassChoice.Subclasses.Add(createFiendPatron().Name);
         }
 
         private static FeatureDefinitionSubclassChoice WarlockFeatureDefinitionSubclassChoice;
