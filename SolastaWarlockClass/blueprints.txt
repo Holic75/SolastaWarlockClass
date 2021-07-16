@@ -174,3 +174,13 @@ WarlockFiendSubclassFiendSpellsSpelllist	e3ce4487-c052-42a7-aee6-e98f0b863aeb
 WarlockFiendSubclassFiendSpells	310f2205-c0a6-455e-bcf8-f86a34a74185
 WarlockFiendSubclassDarkOnesBlessingPower	5d554903-fd37-4c0d-b994-d9ad86e30ba7
 WarlockFiendSubclassDarkOnesBlessing	f925d7b7-302d-406a-9f03-57b01237b9a0
+WarlockFiendSubclassDarkOnesOwnLuckPower	b7a5f82e-4697-42bc-b109-d2f5294344c4
+WarlockFiendFiendishResilence	77b9d4ad-199c-4777-ab9e-7347561d1fe2
+WarlockFiendFiendishResilenceBludgeoning	2736c21a-52f8-4e03-840c-dcbf251f6796
+WarlockFiendFiendishResilencePiercing	f0741423-0cf3-4cb8-a9ea-315ba75f58fb
+WarlockFiendFiendishResilenceSlashing	d79e8d9d-841e-4a6a-874d-cc3349e401a1
+WarlockFiendFiendishResilenceAcid	b2fe2615-bca8-4d97-9da5-d2e62b9cb84e
+WarlockFiendFiendishResilenceCold	7a68be62-ccdc-41e7-a4b8-625e45574f0c
+WarlockFiendFiendishResilenceFire	e89bfe18-391c-4a25-b66d-33c6334013f5
+WarlockFiendFiendishResilenceLightning	e0528a21-b408-4f2a-a791-ca17b206af43
+WarlockFiendFiendishResilencePoison	0a04ca0d-f326-4150-b245-6c775c9770ce

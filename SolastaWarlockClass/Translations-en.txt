@@ -59,3 +59,8 @@ Feature/&WarlockFiendSubclassFiendSpellsTitle	Expanded Spell List
 Feature/&WarlockFiendSubclassFiendSpellsDescription	The Fiend lets you choose from an expanded list of spells when you learn a warlock spell. The following spells are added to the warlock spell list for you.\n1st level: burning hands, bane\n2nd level: blindness, scorching ray\n3rd level: fireball, stinking cloud\n4th level: fire shield, wall of fire\n5th level: flame strike, cloudkill.
 Feature/&WarlockFiendSubclassDarkOnesBlessingTitle	Dark One's Blessing
 Feature/&WarlockFiendSubclassDarkOnesBlessingDescription	Starting at 1st level, when you reduce a hostile creature to 0 hit points, you gain temporary hit points equal to your Charisma modifier + your warlock level (minimum of 1).
+Feature/&WarlockFiendSubclassDarkOnesOwnLuckTitle	Dark One's Own Luck
+Feature/&WarlockFiendSubclassDarkOnesOwnLuckDescription	Starting at 6th level, you can reroll a failed savingthrow. Once you use this feature, you can't use it again until you finish a short or long rest.
+Reaction/&ConsumePowerUseWarlockFiendSubclassDarkOnesOwnLuckPowerDescription	You have failed a saving throw against {0} but can attempt to reroll it.
+Feature/&WarlockFiendFiendishResilenceTitle	Fiendish Resilience
+Feature/&WarlockFiendFiendishResilenceDescription	At 10th level, you gain Resistance to one damage of your choice.

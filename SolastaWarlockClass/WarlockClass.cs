@@ -22,6 +22,7 @@ namespace SolastaWarlockClass
         static public CharacterClassDefinition warlock_class;
         static public SpellListDefinition warlock_spelllist;
 
+        static public NewFeatureDefinitions.WarlockCastSpell warlock_spellcasting;
         static public Dictionary<int, FeatureDefinitionFeatureSet> invocations = new Dictionary<int, FeatureDefinitionFeatureSet>();
         static public FeatureDefinition agonizing_blast;
         static public FeatureDefinitionBonusCantrips repelling_blast;
@@ -78,9 +79,11 @@ namespace SolastaWarlockClass
 
 
         //patrons
-        //fiend, dragon?, 
+        //FIend
         static public FeatureDefinitionMagicAffinity fiend_spells;
         static public NewFeatureDefinitions.InitiatorApplyPowerToSelfOnTargetSlain dark_ones_blessing;
+        static public NewFeatureDefinitions.RerollFailedSavePower dark_ones_own_luck;
+        static public FeatureDefinitionFeatureSet fiendish_resilence;
 
 
         protected WarlockClassBuilder(string name, string guid) : base(name, guid)
@@ -241,7 +244,7 @@ namespace SolastaWarlockClass
                                                                                 }
                                                                                 );
 
-            var warlock_spellcasting = Helpers.CustomSpellcastingBuilder<NewFeatureDefinitions.WarlockCastSpell>
+            warlock_spellcasting = Helpers.CustomSpellcastingBuilder<NewFeatureDefinitions.WarlockCastSpell>
                                                                .createSpontaneousSpellcasting("WarlockClassSpellcasting",
                                                                                               "",
                                                                                               "Feature/&WarlockClassSpellcastingTitle",
@@ -274,7 +277,7 @@ namespace SolastaWarlockClass
                                                                                                                                    new List<int> { 4, 4, 4, 4, 4 }//20
                                                                                                                                    )
                                                                                               );
-            warlock_spellcasting.replacedSpells = new List<int> {0, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+            warlock_spellcasting.replacedSpells = new List<int> {0, 1, 1, 1, 1, 1, 1, 1, 1, 0,
                                                                  1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
             warlock_spellcasting.SetSlotsRecharge(RuleDefinitions.RechargeRate.ShortRest);
 
@@ -362,8 +365,8 @@ namespace SolastaWarlockClass
                                                                                              DatabaseHelper.FeatureDefinitionPowers.PowerFunctionEndlessQuiver,
                                                                                              a =>
                                                                                              {
-                                                                                                 a.rechargeRate = RuleDefinitions.RechargeRate.OneMinute;
-                                                                                                 a.fixedUsesPerRecharge = 10;
+                                                                                                 a.rechargeRate = RuleDefinitions.RechargeRate.AtWill;
+                                                                                                 a.fixedUsesPerRecharge = 1;
                                                                                              }
                                                                                              );
 
@@ -572,7 +575,7 @@ namespace SolastaWarlockClass
                 var effect = new EffectDescription();
                 effect.Copy(DatabaseHelper.FeatureDefinitionPowers.PowerDomainBattleDecisiveStrike.EffectDescription);
                 effect.DurationParameter = 1;
-                effect.DurationType = RuleDefinitions.DurationType.Instantaneous;
+                effect.DurationType = RuleDefinitions.DurationType.Round;
                 effect.SetSavingThrowDifficultyAbility(Helpers.Stats.Charisma);
                 effect.SavingThrowAbility = Helpers.Stats.Charisma;
                 effect.hasSavingThrow = false;
@@ -601,6 +604,7 @@ namespace SolastaWarlockClass
                 effect_form.ConditionForm.Operation = ConditionForm.ConditionOperation.Add;
                 effect_form.ConditionForm.ConditionDefinition = used_condition;
                 effect_form.conditionForm.applyToSelf = true;
+                effect.EffectForms.Add(effect_form);
 
                 lvl_effects[i] = effect;
 
@@ -618,6 +622,7 @@ namespace SolastaWarlockClass
                                                                      RuleDefinitions.UsesDetermination.Fixed,
                                                                      RuleDefinitions.RechargeRate.SpellSlot
                                                                      );
+            power.spellcastingFeature = warlock_spellcasting;
             power.minCustomEffectLevel = 3;
             power.levelEffectList = new List<(int, EffectDescription)>
             {
@@ -626,6 +631,7 @@ namespace SolastaWarlockClass
                 (8, lvl_effects[7]),
                 (20, lvl_effects[9])
             };
+            power.checkReaction = true;
             power.restrictions = new List<NewFeatureDefinitions.IRestriction>()
                                             {
                                                 new NewFeatureDefinitions.AndRestriction(
@@ -922,13 +928,81 @@ namespace SolastaWarlockClass
 
             createFiendSpells();
             createDarkOnesBlessing();
+            createDarkOnesOwnLuck();
+            createFiendishResilence();
             CharacterSubclassDefinition definition = new CharacterSubclassDefinitionBuilder("WarlockSubclassPatronFiend", "911ed94e-3664-4916-b92b-909f0382b3a2")
                                                                                             .SetGuiPresentation(gui_presentation)
                                                                                             .AddFeatureAtLevel(fiend_spells, 1)
                                                                                             .AddFeatureAtLevel(dark_ones_blessing, 1)
+                                                                                            .AddFeatureAtLevel(dark_ones_own_luck, 6)
+                                                                                            .AddFeatureAtLevel(fiendish_resilence, 10)
                                                                                             .AddToDB();
 
             return definition;
+        }
+
+        static void createFiendishResilence()
+        {
+            var title_string = "Feature/&WarlockFiendFiendishResilenceTitle";
+            var description_string = "Feature/&WarlockFiendFiendishResilenceDescription";
+           
+            fiendish_resilence = Helpers.FeatureSetBuilder.createFeatureSet("WarlockFiendFiendishResilence",
+                                                                            "",
+                                                                            title_string,
+                                                                            description_string,
+                                                                            false,
+                                                                            FeatureDefinitionFeatureSet.FeatureSetMode.Exclusion,
+                                                                            true
+                                                                            );
+
+            Dictionary<string, FeatureDefinitionDamageAffinity> resistances_map = new Dictionary<string, FeatureDefinitionDamageAffinity>()
+            {
+                {"Bludgeoning", DatabaseHelper.FeatureDefinitionDamageAffinitys.DamageAffinityBludgeoningResistance},
+                {"Piercing", DatabaseHelper.FeatureDefinitionDamageAffinitys.DamageAffinityPiercingResistance},
+                {"Slashing", DatabaseHelper.FeatureDefinitionDamageAffinitys.DamageAffinitySlashingResistance},
+                {"Acid", DatabaseHelper.FeatureDefinitionDamageAffinitys.DamageAffinityAcidResistance},
+                {"Cold", DatabaseHelper.FeatureDefinitionDamageAffinitys.DamageAffinityColdResistance},
+                {"Fire", DatabaseHelper.FeatureDefinitionDamageAffinitys.DamageAffinityFireResistance},
+                {"Lightning", DatabaseHelper.FeatureDefinitionDamageAffinitys.DamageAffinityLightningResistance},
+                {"Poison", DatabaseHelper.FeatureDefinitionDamageAffinitys.DamageAffinityPoisonResistance},
+            };
+
+            foreach (var r in resistances_map)
+            {
+                var feature = Helpers.CopyFeatureBuilder<FeatureDefinitionDamageAffinity>.createFeatureCopy("WarlockFiendFiendishResilence" + r.Key,
+                                                                                                            "",
+                                                                                                            DatabaseRepository.GetDatabase<DamageDefinition>().GetElement(r.Value.damageType).GuiPresentation.Title,
+                                                                                                            "",
+                                                                                                            null,
+                                                                                                            r.Value
+                                                                                                            );
+                fiendish_resilence.featureSet.Add(feature);
+            }
+        }
+
+
+        static void createDarkOnesOwnLuck()
+        {
+            string title_string = "Feature/&WarlockFiendSubclassDarkOnesOwnLuckTitle";
+            string description_string = "Feature/&WarlockFiendSubclassDarkOnesOwnLuckDescription";
+            dark_ones_own_luck = Helpers.GenericPowerBuilder<NewFeatureDefinitions.RerollFailedSavePower>
+                                                                                .createPower("WarlockFiendSubclassDarkOnesOwnLuckPower",
+                                                                                             "",
+                                                                                             title_string,
+                                                                                             description_string,
+                                                                                             DatabaseHelper.FeatureDefinitionPowers.PowerWinterWolfBreath.guiPresentation.SpriteReference,
+                                                                                             new EffectDescription(),
+                                                                                             RuleDefinitions.ActivationTime.NoCost,
+                                                                                             1,
+                                                                                             RuleDefinitions.UsesDetermination.Fixed,
+                                                                                             RuleDefinitions.RechargeRate.ShortRest
+                                                                                             );
+            Helpers.StringProcessing.addStringCopy(title_string,
+                                                   "Reaction/&ConsumePowerUseWarlockFiendSubclassDarkOnesOwnLuckPowerTitle");
+            Helpers.StringProcessing.addStringCopy("Reaction/&IndomitableResistanceReactTitle",
+                                                   "Reaction/&ConsumePowerUseWarlockFiendSubclassDarkOnesOwnLuckPowerReactTitle");
+            Helpers.StringProcessing.addStringCopy("Reaction/&IndomitableResistanceReactDescription",
+                                                   "Reaction/&ConsumePowerUseWarlockFiendSubclassDarkOnesOwnLuckPowerReactDescription");
         }
 
 
