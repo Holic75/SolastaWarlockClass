@@ -80,3 +80,11 @@ Feedback/&AdditionalDamageWrackedByDivinityFormat	Extra damage due to Wracked wi
 Feedback/&AdditionalDamageWrackedByDivinityLine	Extra damage due to Wracked with Divinity
 Feedback/&AdditionalDamageRadiantSoulLine	Extra damage due to Radiant Soul
 Feedback/&AdditionalDamageRadiantSoulFormat	Radiant Soul
+Subclass/&WarlockSubclassPatronArchmageTitle	Archmage Patron
+Subclass/&WarlockSubclassPatronArchmageDescription	A warlock beholden to an Archmage either serves an extremely powerful mage who bestows power upon them, or channels the echos of a long dead mage, one who's magical presence while alive still allows them some communication with the living. The Archmage Patron allows the warlock to increase the power of their casting ability.
+Feature/&WarlockAngelSubclassArchmageSpellsTitle	Expanded Spell List
+Feature/&WarlockAngelSubclassArchmageSpellsDescription	The Archmage lets you choose from an expanded list of spells when you learn a warlock spell. The following spells are added to the warlock spell list for you.\n1st level: identify, magic missile\n2nd level: magic weapon, see invisibility\n3rd level: haste, lightning bolt\n4th level: identify creatures, greater invisibility\n5th level: mind twist, dominate person.
+Feature/&WarlockArchmageSubclassArcaneKnowledgeTitle	Arcane Knowledge
+Feature/&WarlockArchmageSubclassArcaneKnowledgeDescription	You gain proficiency in the Arcana skill, and you learn one cantrip of your choice from the Wizard spells list.
+Feature/&WarlockArchmageSubclassArcanePowerTitle	Arcane Power
+Feature/&WarlockArchmageSubclassArcanePowerDescription	At 6th level your patron grants you knowlege of a specific area of magecraft. Pick one wizard subclass, you gain the benefits of its 2nd level feature.

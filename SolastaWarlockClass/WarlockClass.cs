@@ -18,7 +18,7 @@ namespace SolastaWarlockClass
         const string WarlockClassNameGuid = "bc097115-5bea-41cd-a5b5-f8f4ceeec00b";
         const string WarlockClassSubclassesGuid = "4697f47d-2ad7-4aec-a6b0-682ebf0d3fd5";
 
-       
+
         static public CharacterClassDefinition warlock_class;
         static public SpellListDefinition warlock_spelllist;
 
@@ -36,7 +36,7 @@ namespace SolastaWarlockClass
         static public Dictionary<int, NewFeatureDefinitions.FeatureDefinitionExtraSpellSelection> book_of_secrets = new Dictionary<int, NewFeatureDefinitions.FeatureDefinitionExtraSpellSelection>();
         static public FeatureDefinitionProficiency beguiling_influence;
         static public FeatureDefinitionFeatureSet devils_sight;
-       
+
 
         static public FeatureDefinitionFeatureSet pact_boon;
         static public NewFeatureDefinitions.FeatureDefinitionExtraSpellSelection pact_of_tome;
@@ -90,6 +90,11 @@ namespace SolastaWarlockClass
         static public FeatureDefinitionPower wracked_with_divinity;
         static public FeatureDefinitionFeatureSet radiant_soul;
         static public FeatureDefinitionPower healing_burst;
+        //Archmage
+        static public FeatureDefinitionMagicAffinity archmage_spells;
+        static public FeatureDefinitionFeatureSet arcane_knowledge;//wizard cantrip + proficiency in arcana
+        static public FeatureDefinitionFeatureSet arcane_power;//2nd level ability
+        //arcane resistance - cha on spell saving throw
 
 
         protected WarlockClassBuilder(string name, string guid) : base(name, guid)
@@ -446,15 +451,15 @@ namespace SolastaWarlockClass
                                                                                                  (DatabaseHelper.SpellListDefinitions.SpellListWizardGreenmage, 0)
                                                                                                  );
 
-             pact_of_tome = Helpers.ExtraSpellSelectionBuilder.createExtraCantripSelection("WarlockClassPactOfTome",
-                                                                                            "",
-                                                                                            "Feature/&WarlockClassPactOfTomeTitle",
-                                                                                            "Feature/&WarlockClassPactOfTomeDescription",
-                                                                                            warlock_class,
-                                                                                            3,
-                                                                                            3,
-                                                                                            spelllist
-                                                                                            );
+            pact_of_tome = Helpers.ExtraSpellSelectionBuilder.createExtraCantripSelection("WarlockClassPactOfTome",
+                                                                                           "",
+                                                                                           "Feature/&WarlockClassPactOfTomeTitle",
+                                                                                           "Feature/&WarlockClassPactOfTomeDescription",
+                                                                                           warlock_class,
+                                                                                           3,
+                                                                                           3,
+                                                                                           spelllist
+                                                                                           );
         }
 
 
@@ -646,7 +651,7 @@ namespace SolastaWarlockClass
                                                 ),
                                                 new NewFeatureDefinitions.NoConditionRestriction(used_condition)
                                             };
-         
+
 
             Helpers.StringProcessing.addPowerReactStrings(power, title_string, use_react_description,
                                             use_react_title, use_react_description, "SpendPower");
@@ -683,7 +688,7 @@ namespace SolastaWarlockClass
                                                                                             };
                                                                                         }
                                                                                         );
-           NewFeatureDefinitions.FeatureData.addFeatureRestrictions(thirsting_blade, new NewFeatureDefinitions.HasFeatureRestriction(pact_of_blade));
+            NewFeatureDefinitions.FeatureData.addFeatureRestrictions(thirsting_blade, new NewFeatureDefinitions.HasFeatureRestriction(pact_of_blade));
         }
 
 
@@ -739,18 +744,18 @@ namespace SolastaWarlockClass
 
         static void createBeguilingInfluence()
         {
-           beguiling_influence = Helpers.ProficiencyBuilder.CreateSkillsProficiency("WarlockBeguilingInfluenceInvocation",
-                                                                                    "",
-                                                                                    "Feature/&WarlockBeguilingInfluenceInvocationTitle",
-                                                                                    "Feature/&WarlockBeguilingInfluenceInvocationDescription",
-                                                                                    Helpers.Skills.Deception, Helpers.Skills.Persuasion
-                                                                                    );
+            beguiling_influence = Helpers.ProficiencyBuilder.CreateSkillsProficiency("WarlockBeguilingInfluenceInvocation",
+                                                                                     "",
+                                                                                     "Feature/&WarlockBeguilingInfluenceInvocationTitle",
+                                                                                     "Feature/&WarlockBeguilingInfluenceInvocationDescription",
+                                                                                     Helpers.Skills.Deception, Helpers.Skills.Persuasion
+                                                                                     );
         }
 
 
         static void createBookOfEldritchSecrets()
         {
-            var invocations_levels = new int[] {5, 7, 9, 12, 15, 18 };
+            var invocations_levels = new int[] { 5, 7, 9, 12, 15, 18 };
 
             foreach (var lvl in invocations_levels)
             {
@@ -892,7 +897,7 @@ namespace SolastaWarlockClass
             var agonizing_effect = new EffectDescription();
             agonizing_effect.Copy(effect);
             agonizing_effect.effectForms.Clear();
-            var damage2 =  new EffectForm();
+            var damage2 = new EffectForm();
             damage2.Copy(damage);
             damage2.applyAbilityBonus = true;
             agonizing_effect.effectForms.Add(damage2);
@@ -921,6 +926,168 @@ namespace SolastaWarlockClass
 
             NewFeatureDefinitions.FeatureData.addFeatureRestrictions(agonizing_blast, new NewFeatureDefinitions.CanCastSpellRestriction(eldritch_blast, false));
             NewFeatureDefinitions.FeatureData.addFeatureRestrictions(miring_blast, new NewFeatureDefinitions.CanCastSpellRestriction(eldritch_blast, false));
+        }
+
+
+        static CharacterSubclassDefinition createArchmagePatron()
+        {
+            var gui_presentation = new GuiPresentationBuilder(
+                    "Subclass/&WarlockSubclassPatronArchmageDescription",
+                    "Subclass/&WarlockSubclassPatronArchmageTitle")
+                    .SetSpriteReference(DatabaseHelper.CharacterSubclassDefinitions.TraditionLoremaster.GuiPresentation.SpriteReference)
+                    .Build();
+
+            createArchmageSpells();
+            createArcaneKnowledge();
+            createArcanePower();
+            //createArcaneResistance();
+            CharacterSubclassDefinition definition = new CharacterSubclassDefinitionBuilder("WarlockSubclassPatronArchmage", "5775d72b-6b6f-440b-bb92-8df1e4eaa598")
+                                                                                            .SetGuiPresentation(gui_presentation)
+                                                                                            .AddFeatureAtLevel(archmage_spells, 1)
+                                                                                            .AddFeatureAtLevel(arcane_knowledge, 1)
+                                                                                            .AddFeatureAtLevel(arcane_power, 6)
+                                                                                            .AddToDB();
+            return definition;
+        }
+
+
+        static void createArcanePower()
+        {
+            List<FeatureDefinition> features = new List<FeatureDefinition>();
+            string title_string = "Feature/&WarlockArchmageSubclassArcanePowerTitle";
+            string description_string = "Feature/&WarlockArchmageSubclassArcanePowerDescription";
+
+            foreach (var subclass_name in DatabaseHelper.FeatureDefinitionSubclassChoices.SubclassChoiceWizardArcaneTraditions.subclasses)
+            {
+                var subclass = DatabaseRepository.GetDatabase<CharacterSubclassDefinition>().GetAllElements().FirstOrDefault(s => s.name == subclass_name);
+
+                var subclass_features = subclass.featureUnlocks.Where(fu => fu.level == 2).Select(fu => fu.featureDefinition).ToArray();
+
+                string description_format_string = "";
+                List<(string, string)> tags_string = new List<(string, string)>();
+
+
+                /*for (int i = 0; i < subclass_features.Length; i++)
+                {
+                    if (i > 0)
+                    {
+                        description_format_string += "\n\n";
+                    }
+                    description_format_string += $"<{subclass_features[i].name}_name>:\n<{subclass_features[i].name}_description>";
+                    tags_string.Add(($"<{subclass_features[i].name}_name>", subclass_features[i].GuiPresentation.title));
+                    tags_string.Add(($"<{subclass_features[i].name}_description>", subclass_features[i].GuiPresentation.description));
+                }*/
+
+                var feature = Helpers.FeatureSetBuilder.createFeatureSet("WarlockArchmageSubclassArcanePower" + subclass_name,
+                                                                        GuidStorage.mergeGuids(subclass.guid, "12df7ed1-4c11-4526-bb24-085f88682bf1"),
+                                                                        subclass.GuiPresentation.title,
+                                                                        Common.common_no_title,
+                                                                        false,
+                                                                        FeatureDefinitionFeatureSet.FeatureSetMode.Union,
+                                                                        false,
+                                                                        subclass_features
+                                                                        );
+                features.Add(feature);
+            }
+
+            arcane_power = Helpers.FeatureSetBuilder.createFeatureSet("WarlockArchmageSubclassArcanePower",
+                                                                        "",
+                                                                        title_string,
+                                                                        description_string,
+                                                                        false,
+                                                                        FeatureDefinitionFeatureSet.FeatureSetMode.Exclusion,
+                                                                        true,
+                                                                        features.ToArray()
+                                                                        );
+        }
+
+
+        static void createArcaneKnowledge()
+        {
+            string title_string = "Feature/&WarlockArchmageSubclassArcaneKnowledgeTitle";
+            string description_string = "Feature/&WarlockArchmageSubclassArcaneKnowledgeDescription";
+
+            var cantrip_spelllist = Helpers.SpelllistBuilder.createCombinedSpellListWithLevelRestriction("WarlockArchmageSubclassArcaneKnowledgeCantripSpelllist", "", "",
+                                                                                     (warlock_spelllist, 10),
+                                                                                     (DatabaseHelper.SpellListDefinitions.SpellListWizard, 0)
+                                                                                     );
+
+            var extra_cantrip = Helpers.ExtraSpellSelectionBuilder.createExtraCantripSelection("WarlockArchmageSubclassArcaneKnowledgeCantrip",
+                                                                                            "",
+                                                                                            Common.common_no_title,
+                                                                                            Common.common_no_title,
+                                                                                            warlock_class,
+                                                                                            1,
+                                                                                            1,
+                                                                                            cantrip_spelllist
+                                                                                            );
+            var arcana_proficiency = Helpers.ProficiencyBuilder.CreateSkillsProficiency("WarlockArchmageSubclassArcaneKnowledgeArcanaProficiency",
+                                                                                         "",
+                                                                                         Common.common_no_title,
+                                                                                         Common.common_no_title,
+                                                                                         Helpers.Skills.Arcana
+                                                                                         );
+
+            arcane_knowledge = Helpers.FeatureSetBuilder.createFeatureSet("WarlockArchmageSubclassArcaneKnowledge",
+                                                                        "",
+                                                                        title_string,
+                                                                        description_string,
+                                                                        false,
+                                                                        FeatureDefinitionFeatureSet.FeatureSetMode.Union,
+                                                                        false,
+                                                                        extra_cantrip,
+                                                                        arcana_proficiency
+                                                                        );
+        }
+
+
+        static void createArchmageSpells()
+        {
+            var spelllist = Helpers.SpelllistBuilder.create9LevelSpelllist("WarlockArchmageSubclassArchmageSpellsSpelllist", "", "",
+                                                                            new List<SpellDefinition>
+                                                                            {
+
+                                                                            },
+                                                                            new List<SpellDefinition>
+                                                                            {
+                                                                                                        DatabaseHelper.SpellDefinitions.Identify,
+                                                                                                        DatabaseHelper.SpellDefinitions.MagicMissile,
+                                                                            },
+                                                                            new List<SpellDefinition>
+                                                                            {
+                                                                                                        DatabaseHelper.SpellDefinitions.MagicWeapon,
+                                                                                                        DatabaseHelper.SpellDefinitions.SeeInvisibility,
+                                                                            },
+                                                                            new List<SpellDefinition>
+                                                                            {
+                                                                                                        DatabaseHelper.SpellDefinitions.LightningBolt,
+                                                                                                        DatabaseHelper.SpellDefinitions.Haste,
+                                                                            },
+                                                                            new List<SpellDefinition>
+                                                                            {
+                                                                                                        DatabaseHelper.SpellDefinitions.IdentifyCreatures,
+                                                                                                        DatabaseHelper.SpellDefinitions.GreaterInvisibility,
+                                                                            },
+                                                                            new List<SpellDefinition>
+                                                                            {
+                                                                                                        DatabaseHelper.SpellDefinitions.MindTwist,
+                                                                                                        DatabaseHelper.SpellDefinitions.DominatePerson,
+                                                                            }
+                                                                            );
+
+            string title = "Feature/&WarlockAngelSubclassArchmageSpellsTitle";
+            string description = "Feature/&WarlockAngelSubclassArchmageSpellsDescription";
+            archmage_spells = Helpers.CopyFeatureBuilder<FeatureDefinitionMagicAffinity>.createFeatureCopy("WarlockArchmageSubclassArchmageSpells",
+                                                                                                            "",
+                                                                                                            title,
+                                                                                                            description,
+                                                                                                            null,
+                                                                                                            DatabaseHelper.FeatureDefinitionMagicAffinitys.MagicAffinityGreenmageGreenMagicList,
+                                                                                                            c =>
+                                                                                                            {
+                                                                                                                c.SetExtendedSpellList(spelllist);
+                                                                                                            }
+                                                                                                            );
         }
 
 
@@ -1382,6 +1549,7 @@ namespace SolastaWarlockClass
 
             WarlockFeatureDefinitionSubclassChoice.Subclasses.Add(createFiendPatron().Name);
             WarlockFeatureDefinitionSubclassChoice.Subclasses.Add(createAngelPatron().Name);
+            WarlockFeatureDefinitionSubclassChoice.Subclasses.Add(createArchmagePatron().Name);
         }
 
         private static FeatureDefinitionSubclassChoice WarlockFeatureDefinitionSubclassChoice;
