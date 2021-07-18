@@ -1,7 +1,7 @@
 # Warlock class for Solasta
 
 This is a mod for the game Solasta: Crown of the Magister.
-It adds warlock class with one patron subclass: Fiend.
+It adds warlock class with two patron subclasses: Angel and Fiend.
 This mod requires SolastaModApi https://github.com/SolastaMods/SolastaModApi ,
 SolastaModHelpers https://github.com/Holic75/SolastaModHelpers
 and SolastaExtraContent https://github.com/Holic75/SolastaExtraContent

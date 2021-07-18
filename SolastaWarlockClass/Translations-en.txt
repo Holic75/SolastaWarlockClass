@@ -78,3 +78,5 @@ Feature/&WarlockAngelSubclassHealingBurstTitle	Healing Burst
 Feature/&WarlockAngelSubclassHealingBurstDescription	Starting at 10th level, as a bonus action you can fill the 30-foot radius sphere around you with healing energy, restoring a number of hit points equal to your warlock level + your Charisma modifier to all your allies in the area. Once you use this feature, you can't use it again until you finish a short rest.
 Feedback/&AdditionalDamageWrackedByDivinityFormat	Extra damage due to Wracked with Divinity
 Feedback/&AdditionalDamageWrackedByDivinityLine	Extra damage due to Wracked with Divinity
+Feedback/&AdditionalDamageRadiantSoulLine	Extra damage due to Radiant Soul
+Feedback/&AdditionalDamageRadiantSoulFormat	Radiant Soul

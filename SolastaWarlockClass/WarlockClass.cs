@@ -1009,6 +1009,7 @@ namespace SolastaWarlockClass
                                                                                                                {
                                                                                                                    a.triggerCondition = (RuleDefinitions.AdditionalDamageTriggerCondition)SolastaModHelpers.ExtendedEnums.AdditionalDamageTriggerCondition.RadiantOrFireSpellDamage;
                                                                                                                    a.additionalDamageType = RuleDefinitions.AdditionalDamageType.SameAsBaseDamage;
+                                                                                                                   a.notificationTag = "RadiantSoul";
                                                                                                                }
                                                                                                                );
             radiant_soul =  Helpers.FeatureSetBuilder.createFeatureSet("WarlockAngelSubclassRadiantSoul",
