@@ -79,11 +79,17 @@ namespace SolastaWarlockClass
 
 
         //patrons
-        //FIend
+        //Fiend
         static public FeatureDefinitionMagicAffinity fiend_spells;
         static public NewFeatureDefinitions.InitiatorApplyPowerToSelfOnTargetSlain dark_ones_blessing;
         static public NewFeatureDefinitions.RerollFailedSavePower dark_ones_own_luck;
         static public FeatureDefinitionFeatureSet fiendish_resilence;
+        //Angel
+        static public FeatureDefinitionMagicAffinity angel_spells;
+        static public FeatureDefinitionFeatureSet holy_warrior;
+        static public FeatureDefinitionPower wracked_with_divinity;
+        static public FeatureDefinitionFeatureSet radiant_soul;
+        static public FeatureDefinitionPower healing_burst;
 
 
         protected WarlockClassBuilder(string name, string guid) : base(name, guid)
@@ -918,6 +924,266 @@ namespace SolastaWarlockClass
         }
 
 
+        static CharacterSubclassDefinition createAngelPatron()
+        {
+            var gui_presentation = new GuiPresentationBuilder(
+                    "Subclass/&WarlockSubclassPatronAngelDescription",
+                    "Subclass/&WarlockSubclassPatronAngelTitle")
+                    .SetSpriteReference(DatabaseHelper.CharacterSubclassDefinitions.DomainSun.GuiPresentation.SpriteReference)
+                    .Build();
+
+            createAngelSpells();
+            createHolyWarrior();
+            createWrackedWithDivinity();
+            createRadiantSoul();
+            createHealingBurst();
+            CharacterSubclassDefinition definition = new CharacterSubclassDefinitionBuilder("WarlockSubclassPatronAngel", "9454a640-69dc-4acf-a137-955d9ff624d7")
+                                                                                            .SetGuiPresentation(gui_presentation)
+                                                                                            .AddFeatureAtLevel(angel_spells, 1)
+                                                                                            .AddFeatureAtLevel(holy_warrior, 1)
+                                                                                            .AddFeatureAtLevel(wracked_with_divinity, 1)
+                                                                                            .AddFeatureAtLevel(radiant_soul, 6)
+                                                                                            .AddFeatureAtLevel(healing_burst, 10)
+                                                                                            .AddToDB();
+
+            return definition;
+        }
+
+
+        static void createHealingBurst()
+        {
+            string title_string = "Feature/&WarlockAngelSubclassHealingBurstTitle";
+            string description_string = "Feature/&WarlockAngelSubclassHealingBurstDescription";
+
+            var effect = new EffectDescription();
+            effect.Copy(DatabaseHelper.SpellDefinitions.HealingWord.EffectDescription);
+            effect.DurationParameter = 1;
+            effect.SetRangeType(RuleDefinitions.RangeType.Self);
+            effect.SetTargetSide(RuleDefinitions.Side.Ally);
+            effect.SetRangeParameter(1);
+            effect.SetTargetParameter(6);
+            effect.SetTargetProximityDistance(6);
+            effect.DurationType = RuleDefinitions.DurationType.Instantaneous;
+            effect.SetTargetType(RuleDefinitions.TargetType.Sphere);
+            effect.EffectForms.Clear();
+
+            var effect_form = new EffectForm();
+            effect_form.healingForm = new HealingForm();
+            effect_form.FormType = EffectForm.EffectFormType.Healing;
+            effect_form.healingForm.diceNumber = 1;
+            effect_form.healingForm.dieType = RuleDefinitions.DieType.D1;
+            effect_form.SetApplyLevel(EffectForm.LevelApplianceType.Multiply);
+            effect_form.SetLevelType(RuleDefinitions.LevelSourceType.ClassLevel);
+            effect_form.applyAbilityBonus = true;
+            effect.EffectForms.Add(effect_form);
+
+
+            healing_burst = Helpers.PowerBuilder.createPower("WarlockAngelSubclassHealingBurst",
+                                                            "",
+                                                            title_string,
+                                                            description_string,
+                                                            DatabaseHelper.FeatureDefinitionPowers.PowerPaladinLayOnHands.GuiPresentation.spriteReference,
+                                                            DatabaseHelper.FeatureDefinitionPowers.PowerPaladinLayOnHands,
+                                                            effect,
+                                                            RuleDefinitions.ActivationTime.Action,
+                                                            1,
+                                                            RuleDefinitions.UsesDetermination.Fixed,
+                                                            RuleDefinitions.RechargeRate.ShortRest,
+                                                            ability: Helpers.Stats.Charisma
+                                                            );
+        }
+
+
+        static void createRadiantSoul()
+        {
+            var title_string = "Feature/&WarlockAngelSubclassRadiantSoulTitle";
+            var description_string = "Feature/&WarlockAngelSubclassRadiantSoulDescription";
+
+            var extra_damage = Helpers.CopyFeatureBuilder<FeatureDefinitionAdditionalDamage>.createFeatureCopy("WarlockAngelSubclassRadiantSoulExtraDamage",
+                                                                                                               "",
+                                                                                                               Common.common_no_title,
+                                                                                                               Common.common_no_title,
+                                                                                                               null,
+                                                                                                               DatabaseHelper.FeatureDefinitionAdditionalDamages.AdditionalDamageSorcererDraconicElementalAffinity,
+                                                                                                               a =>
+                                                                                                               {
+                                                                                                                   a.triggerCondition = (RuleDefinitions.AdditionalDamageTriggerCondition)SolastaModHelpers.ExtendedEnums.AdditionalDamageTriggerCondition.RadiantOrFireSpellDamage;
+                                                                                                                   a.additionalDamageType = RuleDefinitions.AdditionalDamageType.SameAsBaseDamage;
+                                                                                                               }
+                                                                                                               );
+            radiant_soul =  Helpers.FeatureSetBuilder.createFeatureSet("WarlockAngelSubclassRadiantSoul",
+                                                                        "",
+                                                                        title_string,
+                                                                        description_string,
+                                                                        false,
+                                                                        FeatureDefinitionFeatureSet.FeatureSetMode.Union,
+                                                                        false,
+                                                                        extra_damage,
+                                                                        DatabaseHelper.FeatureDefinitionDamageAffinitys.DamageAffinityRadiantResistance
+                                                                        );
+        }
+
+        static void createWrackedWithDivinity()
+        {
+            var title_string = "Feature/&WarlockAngelSubclassWrackedByDivinityTitle";
+            var description_string = "Feature/&WarlockAngelSubclassWrackedByDivinityDescription";
+
+            var extra_damage = Helpers.CopyFeatureBuilder<FeatureDefinitionAdditionalDamage>.createFeatureCopy("WarlockAngelSubclassWrackedByDivinityMelee",
+                                                                                                               "",
+                                                                                                               title_string,
+                                                                                                               description_string,
+                                                                                                               null,
+                                                                                                               DatabaseHelper.FeatureDefinitionAdditionalDamages.AdditionalDamagePaladinDivineSmite,
+                                                                                                               a =>
+                                                                                                               {
+                                                                                                                   a.damageDieType = RuleDefinitions.DieType.D10;
+                                                                                                                   a.triggerCondition = RuleDefinitions.AdditionalDamageTriggerCondition.AlwaysActive;
+                                                                                                                   a.familiesWithAdditionalDice = new List<string>();
+                                                                                                                   a.notificationTag = "WrackedByDivinity";
+                                                                                                                   a.familiesDiceNumber = 0;
+                                                                                                                   a.damageDiceNumber = 1;
+                                                                                                                   a.damageAdvancement = RuleDefinitions.AdditionalDamageAdvancement.None;
+                                                                                                                   a.requiredProperty = RuleDefinitions.AdditionalDamageRequiredProperty.MeleeWeapon;
+                                                                                                               }
+                                                                                                               );
+            var extra_damage_ranged = Helpers.CopyFeatureBuilder<FeatureDefinitionAdditionalDamage>.createFeatureCopy("WarlockAngelSubclassWrackedByDivinityRanged",
+                                                                                                                      "",
+                                                                                                                      title_string,
+                                                                                                                      description_string,
+                                                                                                                      null,
+                                                                                                                      extra_damage,
+                                                                                                                      a =>
+                                                                                                                      {
+                                                                                                                          a.requiredProperty = RuleDefinitions.AdditionalDamageRequiredProperty.RangeWeapon;
+                                                                                                                      }
+                                                                                                                      );
+
+
+            var condition = Helpers.ConditionBuilder.createConditionWithInterruptions("WarlockAngelSubclassWrackedByDivinityCondition",
+                                                                                      "",
+                                                                                      title_string,
+                                                                                      description_string,
+                                                                                      null,
+                                                                                      DatabaseHelper.ConditionDefinitions.ConditionBrandingSmite,
+                                                                                      new RuleDefinitions.ConditionInterruption[] { RuleDefinitions.ConditionInterruption.AttacksAndDamages },
+                                                                                      extra_damage,
+                                                                                      extra_damage_ranged,
+                                                                                      DatabaseHelper.FeatureDefinitionAttackModifiers.AttackModifierMartialSpellBladeMagicWeapon
+                                                                                      );
+            NewFeatureDefinitions.ConditionsData.no_refresh_conditions.Add(condition);
+
+            var effect = new EffectDescription();
+            effect.Copy(DatabaseHelper.SpellDefinitions.BrandingSmite.EffectDescription);
+            effect.DurationParameter = 1;
+            effect.DurationType = RuleDefinitions.DurationType.Minute;
+            effect.EffectAdvancement.Clear();           
+            effect.EffectForms.Clear();
+
+            var effect_form = new EffectForm();
+            effect_form.ConditionForm = new ConditionForm();
+            effect_form.FormType = EffectForm.EffectFormType.Condition;
+            effect_form.ConditionForm.Operation = ConditionForm.ConditionOperation.Add;
+            effect_form.ConditionForm.ConditionDefinition = condition;
+            effect_form.conditionForm.applyToSelf = true;
+            effect.EffectForms.Add(effect_form);
+
+            wracked_with_divinity = Helpers.GenericPowerBuilder<FeatureDefinitionPower>.createPower("WarlockAngelSubclassWrackedByDivinityPower",
+                                                                                                    "",
+                                                                                                    title_string,
+                                                                                                    description_string,
+                                                                                                    DatabaseHelper.FeatureDefinitionPowers.PowerDomainBattleDecisiveStrike.guiPresentation.spriteReference,
+                                                                                                    effect,
+                                                                                                    RuleDefinitions.ActivationTime.BonusAction,
+                                                                                                    0,
+                                                                                                    RuleDefinitions.UsesDetermination.AbilityBonusPlusFixed,
+                                                                                                    RuleDefinitions.RechargeRate.ShortRest,
+                                                                                                    uses_ability: Helpers.Stats.Charisma
+                                                                                                    );
+        }
+
+
+        static void createHolyWarrior()
+        {
+            string title = "Feature/&WarlockAngelSubclassHolyWarriorTitle";
+            string description = "Feature/&WarlockAngelSubclassHolyWarriorDescription";
+            var armor_proficiency = Helpers.ProficiencyBuilder.CreateArmorProficiency("WarlockAngelSubclassHolyWarriorArmorProficiency",
+                                                                                        "",
+                                                                                        title,
+                                                                                        description,
+                                                                                        Helpers.ArmorProficiencies.MediumArmor,
+                                                                                        Helpers.ArmorProficiencies.Shield
+                                                                                        );
+
+            var skill_proficiency = Helpers.ProficiencyBuilder.CreateSkillsProficiency("WarlockAngelSubclassHolyWarriorSkillProficiency",
+                                                                         "",
+                                                                         title,
+                                                                         description,
+                                                                         Helpers.Skills.Religion
+                                                                         );
+
+            holy_warrior = Helpers.FeatureSetBuilder.createFeatureSet("WarlockAngelSubclassHolyWarrior",
+                                                                        "",
+                                                                        title,
+                                                                        description,
+                                                                        false,
+                                                                        FeatureDefinitionFeatureSet.FeatureSetMode.Union,
+                                                                        false,
+                                                                        armor_proficiency,
+                                                                        skill_proficiency
+                                                                        );
+        }
+
+
+        static void createAngelSpells()
+        {
+            var spelllist = Helpers.SpelllistBuilder.create9LevelSpelllist("WarlockAngelSubclassAngelSpellsSpelllist", "", "",
+                                                                            new List<SpellDefinition>
+                                                                            {
+
+                                                                            },
+                                                                            new List<SpellDefinition>
+                                                                            {
+                                                                                                        DatabaseHelper.SpellDefinitions.Bless,
+                                                                                                        DatabaseHelper.SpellDefinitions.DivineFavor,
+                                                                            },
+                                                                            new List<SpellDefinition>
+                                                                            {
+                                                                                                        DatabaseHelper.SpellDefinitions.LesserRestoration,
+                                                                                                        DatabaseHelper.SpellDefinitions.SpiritualWeapon,
+                                                                            },
+                                                                            new List<SpellDefinition>
+                                                                            {
+                                                                                                        DatabaseHelper.SpellDefinitions.BeaconOfHope,
+                                                                                                        DatabaseHelper.SpellDefinitions.SpiritGuardians,
+                                                                            },
+                                                                            new List<SpellDefinition>
+                                                                            {
+                                                                                                        DatabaseHelper.SpellDefinitions.DeathWard,
+                                                                                                        DatabaseHelper.SpellDefinitions.WallOfFire,
+                                                                            },
+                                                                            new List<SpellDefinition>
+                                                                            {
+                                                                                                        DatabaseHelper.SpellDefinitions.FlameStrike,
+                                                                                                        DatabaseHelper.SpellDefinitions.GreaterRestoration,
+                                                                            }
+                                                                            );
+
+            string title = "Feature/&WarlockAngelSubclassAngelSpellsTitle";
+            string description = "Feature/&WarlockAngelSubclassAngelSpellsDescription";
+            angel_spells = Helpers.CopyFeatureBuilder<FeatureDefinitionMagicAffinity>.createFeatureCopy("WarlockAngelSubclassAngelSpells",
+                                                                                                                         "",
+                                                                                                                         title,
+                                                                                                                         description,
+                                                                                                                         null,
+                                                                                                                         DatabaseHelper.FeatureDefinitionMagicAffinitys.MagicAffinityGreenmageGreenMagicList,
+                                                                                                                         c =>
+                                                                                                                         {
+                                                                                                                             c.SetExtendedSpellList(spelllist);
+                                                                                                                         }
+                                                                                                                         );
+        }
+
+
         static CharacterSubclassDefinition createFiendPatron()
         {
             var gui_presentation = new GuiPresentationBuilder(
@@ -1114,6 +1380,7 @@ namespace SolastaWarlockClass
                                          );
 
             WarlockFeatureDefinitionSubclassChoice.Subclasses.Add(createFiendPatron().Name);
+            WarlockFeatureDefinitionSubclassChoice.Subclasses.Add(createAngelPatron().Name);
         }
 
         private static FeatureDefinitionSubclassChoice WarlockFeatureDefinitionSubclassChoice;

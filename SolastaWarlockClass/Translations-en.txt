@@ -64,3 +64,17 @@ Feature/&WarlockFiendSubclassDarkOnesOwnLuckDescription	Starting at 6th level, y
 Reaction/&ConsumePowerUseWarlockFiendSubclassDarkOnesOwnLuckPowerDescription	You have failed a saving throw against {0} but can attempt to reroll it.
 Feature/&WarlockFiendFiendishResilenceTitle	Fiendish Resilience
 Feature/&WarlockFiendFiendishResilenceDescription	At 10th level, you gain Resistance to one damage of your choice.
+Subclass/&WarlockSubclassPatronAngelTitle	Angel Patron
+Subclass/&WarlockSubclassPatronAngelDescription	Your power is the result of a divine contract between yourself and a minor Celestial. In return for a promise of godly favor after death, you are given a mission to complete while alive - often involving the destruction of evil. The Angel in question will provide what aid it can to help you complete this mission.
+Feature/&WarlockAngelSubclassAngelSpellsTitle	Expanded Spell List
+Feature/&WarlockAngelSubclassAngelSpellsDescription	The Angel lets you choose from an expanded list of spells when you learn a warlock spell. The following spells are added to the warlock spell list for you.\n1st level: bless, divine favor\n2nd level: lesser restoration, spiritual weapon\n3rd level: beacon of hope, spirit guardians\n4th level: death ward, wall of fire\n5th level: flame strike, greater restoration.
+Feature/&WarlockAngelSubclassHolyWarriorTitle	Holy Warrior
+Feature/&WarlockAngelSubclassHolyWarriorDescription	At 1st level, you acquire the training necessary to effectively arm yourself for battle. You gain proficiency with medium armor and shields. In addition, you gain proficiency with Religion.
+Feature/&WarlockAngelSubclassWrackedByDivinityTitle	Wracked with Divinity
+Feature/&WarlockAngelSubclassWrackedByDivinityDescription	Starting at 1st level, your patron can channel chaotic divine energy through your body. As a bonus action, you can touch a weapon to turn it into a magic weapon that deals an additional 1d10 radiant damage on its next hit. This effect last for one minute, and can be used a number of times equal to your charisma modifier. Once you use up this feature, you can't use it again until you finish a short or long rest.
+Feature/&WarlockAngelSubclassRadiantSoulTitle	Radiant Soul
+Feature/&WarlockAngelSubclassRadiantSoulDescription	Starting at 6th level, your link to your Patron allows you to serve as a conduit for radiant energy. You have resistance to radiant damage, and when you cast any instantaneous effect spell that deals radiant or fire damage, you add your Charisma modifier to one radiant or fire damage roll of that spell. 
+Feature/&WarlockAngelSubclassHealingBurstTitle	Healing Burst
+Feature/&WarlockAngelSubclassHealingBurstDescription	Starting at 10th level, as a bonus action you can fill the 30-foot radius sphere around you with healing energy, restoring a number of hit points equal to your warlock level + your Charisma modifier to all your allies in the area. Once you use this feature, you can't use it again until you finish a short rest.
+Feedback/&AdditionalDamageWrackedByDivinityFormat	Extra damage due to Wracked with Divinity
+Feedback/&AdditionalDamageWrackedByDivinityLine	Extra damage due to Wracked with Divinity
