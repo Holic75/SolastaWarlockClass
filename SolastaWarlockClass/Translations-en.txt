@@ -88,3 +88,5 @@ Feature/&WarlockArchmageSubclassArcaneKnowledgeTitle	Arcane Knowledge
 Feature/&WarlockArchmageSubclassArcaneKnowledgeDescription	You gain proficiency in the Arcana skill, and you learn one cantrip of your choice from the Wizard spells list.
 Feature/&WarlockArchmageSubclassArcanePowerTitle	Arcane Power
 Feature/&WarlockArchmageSubclassArcanePowerDescription	At 6th level your patron grants you knowlege of a specific area of magecraft. Pick one wizard subclass, you gain the benefits of its 2nd level feature.
+Feature/&WarlockArchmageSubclassArcaneResistanceTitle	Arcane Ward
+Feature/&WarlockArchmageSubclassArcaneResistanceDescription	Starting at 10th level you receive +1 bonus to all your savingthrows against spells. In addition, you gain resitance against force damage.

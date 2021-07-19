@@ -94,7 +94,7 @@ namespace SolastaWarlockClass
         static public FeatureDefinitionMagicAffinity archmage_spells;
         static public FeatureDefinitionFeatureSet arcane_knowledge;//wizard cantrip + proficiency in arcana
         static public FeatureDefinitionFeatureSet arcane_power;//2nd level ability
-        //arcane resistance - cha on spell saving throw
+        static public FeatureDefinitionFeatureSet arcane_resistance;
 
 
         protected WarlockClassBuilder(string name, string guid) : base(name, guid)
@@ -251,7 +251,8 @@ namespace SolastaWarlockClass
                                                                                 },
                                                                                 new List<SpellDefinition>
                                                                                 {
-                                                                                    DatabaseHelper.SpellDefinitions.HoldMonster
+                                                                                    DatabaseHelper.SpellDefinitions.HoldMonster,
+                                                                                    DatabaseHelper.SpellDefinitions.MindTwist
                                                                                 }
                                                                                 );
 
@@ -940,14 +941,44 @@ namespace SolastaWarlockClass
             createArchmageSpells();
             createArcaneKnowledge();
             createArcanePower();
-            //createArcaneResistance();
+            createArcaneResistance();
             CharacterSubclassDefinition definition = new CharacterSubclassDefinitionBuilder("WarlockSubclassPatronArchmage", "5775d72b-6b6f-440b-bb92-8df1e4eaa598")
                                                                                             .SetGuiPresentation(gui_presentation)
                                                                                             .AddFeatureAtLevel(archmage_spells, 1)
                                                                                             .AddFeatureAtLevel(arcane_knowledge, 1)
                                                                                             .AddFeatureAtLevel(arcane_power, 6)
+                                                                                            .AddFeatureAtLevel(arcane_resistance, 10)
                                                                                             .AddToDB();
             return definition;
+        }
+
+
+        static void createArcaneResistance()
+        {
+            string title_string = "Feature/&WarlockArchmageSubclassArcaneResistanceTitle";
+            string description_string = "Feature/&WarlockArchmageSubclassArcaneResistanceDescription";
+            var savingthrow_bonus = Helpers.FeatureBuilder<NewFeatureDefinitions.FixedSavingthrowBonusAgainstSpells>.createFeature("WarlockArchmageSubclassArcaneResistanceSavesBonus",
+                                                                                                                                  "",
+                                                                                                                                  Common.common_no_title,
+                                                                                                                                  Common.common_no_title,
+                                                                                                                                  Common.common_no_icon,
+                                                                                                                                  a =>
+                                                                                                                                  {
+                                                                                                                                      a.bonus = 1;
+                                                                                                                                      a.restrictions = new List<NewFeatureDefinitions.IRestriction>();
+                                                                                                                                  }
+                                                                                                                                  );
+            arcane_resistance = Helpers.FeatureSetBuilder.createFeatureSet("WarlockArchmageSubclassArcaneResistance",
+                                                                        "",
+                                                                        title_string,
+                                                                        description_string,
+                                                                        false,
+                                                                        FeatureDefinitionFeatureSet.FeatureSetMode.Exclusion,
+                                                                        true,
+                                                                        savingthrow_bonus,
+                                                                        DatabaseHelper.FeatureDefinitionDamageAffinitys.DamageAffinityForceDamageResistance
+                                                                        );
+
         }
 
 
@@ -963,21 +994,6 @@ namespace SolastaWarlockClass
 
                 var subclass_features = subclass.featureUnlocks.Where(fu => fu.level == 2).Select(fu => fu.featureDefinition).ToArray();
 
-                string description_format_string = "";
-                List<(string, string)> tags_string = new List<(string, string)>();
-
-
-                /*for (int i = 0; i < subclass_features.Length; i++)
-                {
-                    if (i > 0)
-                    {
-                        description_format_string += "\n\n";
-                    }
-                    description_format_string += $"<{subclass_features[i].name}_name>:\n<{subclass_features[i].name}_description>";
-                    tags_string.Add(($"<{subclass_features[i].name}_name>", subclass_features[i].GuiPresentation.title));
-                    tags_string.Add(($"<{subclass_features[i].name}_description>", subclass_features[i].GuiPresentation.description));
-                }*/
-
                 var feature = Helpers.FeatureSetBuilder.createFeatureSet("WarlockArchmageSubclassArcanePower" + subclass_name,
                                                                         GuidStorage.mergeGuids(subclass.guid, "12df7ed1-4c11-4526-bb24-085f88682bf1"),
                                                                         subclass.GuiPresentation.title,
@@ -989,7 +1005,6 @@ namespace SolastaWarlockClass
                                                                         );
                 features.Add(feature);
             }
-
             arcane_power = Helpers.FeatureSetBuilder.createFeatureSet("WarlockArchmageSubclassArcanePower",
                                                                         "",
                                                                         title_string,
@@ -1546,10 +1561,9 @@ namespace SolastaWarlockClass
                                               return a.Level - b.Level;
                                           }
                                          );
-
-            WarlockFeatureDefinitionSubclassChoice.Subclasses.Add(createFiendPatron().Name);
             WarlockFeatureDefinitionSubclassChoice.Subclasses.Add(createAngelPatron().Name);
             WarlockFeatureDefinitionSubclassChoice.Subclasses.Add(createArchmagePatron().Name);
+            WarlockFeatureDefinitionSubclassChoice.Subclasses.Add(createFiendPatron().Name);
         }
 
         private static FeatureDefinitionSubclassChoice WarlockFeatureDefinitionSubclassChoice;
