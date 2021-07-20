@@ -205,12 +205,11 @@ namespace SolastaWarlockClass
             warlock_spelllist = Helpers.SpelllistBuilder.create9LevelSpelllist("WarlockClassSpelllist", "", "",
                                                                                 new List<SpellDefinition>
                                                                                 {
+                                                                                    DatabaseHelper.SpellDefinitions.AnnoyingBee,
                                                                                     DatabaseHelper.SpellDefinitions.ChillTouch,
                                                                                     eldritch_blast,
-                                                                                    DatabaseHelper.SpellDefinitions.DancingLights,
-                                                                                    DatabaseHelper.SpellDefinitions.Dazzle,
                                                                                     DatabaseHelper.SpellDefinitions.PoisonSpray,
-                                                                                    SolastaExtraContent.Cantrips.sunlight_blade,
+                                                                                    //SolastaExtraContent.Cantrips.sunlight_blade,
                                                                                     DatabaseHelper.SpellDefinitions.TrueStrike,
                                                                                 },
                                                                                 new List<SpellDefinition>
@@ -255,6 +254,17 @@ namespace SolastaWarlockClass
                                                                                     DatabaseHelper.SpellDefinitions.MindTwist
                                                                                 }
                                                                                 );
+
+            var sunlight_blade = NewFeatureDefinitions.SpellData.getSpell("SunlightBladeSpell");
+            var hellish_rebuke = NewFeatureDefinitions.SpellData.getSpell("HellishRebukeSpell");
+            if (sunlight_blade != null)
+            {
+                Helpers.Misc.addSpellToSpelllist(warlock_spelllist, sunlight_blade);
+            }
+            if (hellish_rebuke != null)
+            {
+                Helpers.Misc.addSpellToSpelllist(warlock_spelllist, hellish_rebuke);
+            }
 
             warlock_spellcasting = Helpers.CustomSpellcastingBuilder<NewFeatureDefinitions.WarlockCastSpell>
                                                                .createSpontaneousSpellcasting("WarlockClassSpellcasting",
@@ -451,6 +461,11 @@ namespace SolastaWarlockClass
                                                                                                  (DatabaseHelper.SpellListDefinitions.SpellListRanger, 0),
                                                                                                  (DatabaseHelper.SpellListDefinitions.SpellListWizardGreenmage, 0)
                                                                                                  );
+            var vicious_mockery = NewFeatureDefinitions.SpellData.getSpell("ViciousMockerySpell");
+            if (vicious_mockery != null)
+            {
+                Helpers.Misc.addSpellToSpelllist(spelllist, vicious_mockery);
+            }
 
             pact_of_tome = Helpers.ExtraSpellSelectionBuilder.createExtraCantripSelection("WarlockClassPactOfTome",
                                                                                            "",
