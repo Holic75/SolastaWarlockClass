@@ -773,6 +773,12 @@ namespace SolastaWarlockClass
         {
             var invocations_levels = new int[] { 5, 7, 9, 12, 15, 18 };
 
+            var spelllist = Helpers.SpelllistBuilder.createCombinedSpellListWithLevelRestriction("WarlockClassBookOfEldritchSecretsInvocationSpelllist", "", "",
+                                                                                     (warlock_spelllist, 10),
+                                                                                     (DatabaseHelper.SpellListDefinitions.SpellListWizard, 10)
+                                                                                     );
+            spelllist.spellsByLevel[0].spells.Clear();
+
             foreach (var lvl in invocations_levels)
             {
                 var feature = Helpers.ExtraSpellSelectionBuilder.createExtraSpellSelection("WarlockClassBookOfEldritchSecretsInvocation" + lvl.ToString(),
@@ -782,7 +788,7 @@ namespace SolastaWarlockClass
                                                                                                warlock_class,
                                                                                                lvl,
                                                                                                1,
-                                                                                               DatabaseHelper.SpellListDefinitions.SpellListWizard
+                                                                                               spelllist
                                                                                                );
                 book_of_secrets[lvl] = feature;
                 NewFeatureDefinitions.FeatureData.addFeatureRestrictions(feature, new NewFeatureDefinitions.HasFeatureRestriction(pact_of_tome));
@@ -1008,6 +1014,44 @@ namespace SolastaWarlockClass
                 var subclass = DatabaseRepository.GetDatabase<CharacterSubclassDefinition>().GetAllElements().FirstOrDefault(s => s.name == subclass_name);
 
                 var subclass_features = subclass.featureUnlocks.Where(fu => fu.level == 2).Select(fu => fu.featureDefinition).ToArray();
+
+                for (int i = 0; i <subclass_features.Length; i++)
+                {
+                    var feature_set = subclass_features[i] as FeatureDefinitionFeatureSet;
+
+                    if (feature_set != null && feature_set.featureSet.OfType<NewFeatureDefinitions.FeatureDefinitionExtraSpellSelection>().Count() > 0)
+                    {
+                        var new_feature_set = Helpers.CopyFeatureBuilder<FeatureDefinitionFeatureSet>.createFeatureCopy("WarlockArchmageSubclassArcanePower" + feature_set.name,
+                                                                                                                        GuidStorage.mergeGuids(feature_set.guid, "c9ba2791-54f0-4e6f-897f-9efbfeae09a4"),
+                                                                                                                        "",
+                                                                                                                        "",
+                                                                                                                        null,
+                                                                                                                        feature_set,
+                                                                                                                        a => a.featureSet = new List<FeatureDefinition>()
+                                                                                                                        );
+                        foreach (var f in feature_set.FeatureSet)
+                        {
+                            var ff = f as NewFeatureDefinitions.FeatureDefinitionExtraSpellSelection;
+                            if (ff == null)
+                            {
+                                new_feature_set.featureSet.Add(f);
+                            }
+                            else
+                            {
+                                ff = Helpers.CopyFeatureBuilder<NewFeatureDefinitions.FeatureDefinitionExtraSpellSelection>.createFeatureCopy("WarlockArchmageSubclassArcanePower" + ff.name,
+                                                                                                                        GuidStorage.mergeGuids(ff.guid, "c9ba2791-54f0-4e6f-897f-9efbfeae09a4"),
+                                                                                                                        "",
+                                                                                                                        "",
+                                                                                                                        null,
+                                                                                                                        ff,
+                                                                                                                        a => { a.caster_class = warlock_class; a.level = 6; }
+                                                                                                                        );
+                                new_feature_set.featureSet.Add(ff);
+                            }
+                        }
+                        subclass_features[i] = new_feature_set;
+                    }
+                }
 
                 var feature = Helpers.FeatureSetBuilder.createFeatureSet("WarlockArchmageSubclassArcanePower" + subclass_name,
                                                                         GuidStorage.mergeGuids(subclass.guid, "12df7ed1-4c11-4526-bb24-085f88682bf1"),
