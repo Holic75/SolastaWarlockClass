@@ -466,6 +466,11 @@ namespace SolastaWarlockClass
             {
                 Helpers.Misc.addSpellToSpelllist(spelllist, vicious_mockery);
             }
+            var shillelagh = NewFeatureDefinitions.SpellData.getSpell("ShillelaghSpell");
+            if (shillelagh != null)
+            {
+                Helpers.Misc.addSpellToSpelllist(spelllist, shillelagh);
+            }
 
             pact_of_tome = Helpers.ExtraSpellSelectionBuilder.createExtraCantripSelection("WarlockClassPactOfTome",
                                                                                            "",
