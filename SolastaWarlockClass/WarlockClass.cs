@@ -330,6 +330,18 @@ namespace SolastaWarlockClass
             subclassChoicesGuiPresentation.Title = "Subclass/&WarlockSubclassPatronTitle";
             subclassChoicesGuiPresentation.Description = "Subclass/&WarlockSubclassPatronDescription";
             WarlockFeatureDefinitionSubclassChoice = this.BuildSubclassChoice(1, "Patron", false, "SubclassChoiceWarlockSpecialistArchetypes", subclassChoicesGuiPresentation, WarlockClassSubclassesGuid);
+
+            var itemlist = new List<ItemDefinition>
+            {
+                DatabaseHelper.ItemDefinitions.WandOfLightningBolts,
+                DatabaseHelper.ItemDefinitions.StaffOfFire,
+                DatabaseHelper.ItemDefinitions.ArcaneShieldstaff
+            };
+
+            foreach (ItemDefinition item in itemlist)
+            {
+                item.RequiredAttunementClasses.Add(warlock_class);
+            };
         }
 
 
