@@ -207,6 +207,7 @@ namespace SolastaWarlockClass
                                                                                 {
                                                                                     DatabaseHelper.SpellDefinitions.AnnoyingBee,
                                                                                     DatabaseHelper.SpellDefinitions.ChillTouch,
+                                                                                    DatabaseHelper.SpellDefinitions.DancingLights,
                                                                                     eldritch_blast,
                                                                                     DatabaseHelper.SpellDefinitions.PoisonSpray,
                                                                                     //SolastaExtraContent.Cantrips.sunlight_blade,
