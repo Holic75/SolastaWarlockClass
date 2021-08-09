@@ -256,15 +256,18 @@ namespace SolastaWarlockClass
                                                                                 }
                                                                                 );
 
-            var sunlight_blade = NewFeatureDefinitions.SpellData.getSpell("SunlightBladeSpell");
-            var hellish_rebuke = NewFeatureDefinitions.SpellData.getSpell("HellishRebukeSpell");
-            if (sunlight_blade != null)
+            var new_spells = new SpellDefinition[]{ NewFeatureDefinitions.SpellData.getSpell("SunlightBladeSpell"),
+                                                    NewFeatureDefinitions.SpellData.getSpell("ThunderStrikeSpell"),
+                                                    NewFeatureDefinitions.SpellData.getSpell("IceStrikeSpell"),
+                                                    NewFeatureDefinitions.SpellData.getSpell("HellishRebukeSpell")
+                                                  };
+
+            foreach (var s in new_spells)
             {
-                Helpers.Misc.addSpellToSpelllist(warlock_spelllist, sunlight_blade);
-            }
-            if (hellish_rebuke != null)
-            {
-                Helpers.Misc.addSpellToSpelllist(warlock_spelllist, hellish_rebuke);
+                if (s != null)
+                {
+                    Helpers.Misc.addSpellToSpelllist(warlock_spelllist, s);
+                }
             }
 
             warlock_spellcasting = Helpers.CustomSpellcastingBuilder<NewFeatureDefinitions.WarlockCastSpell>
