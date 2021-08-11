@@ -116,10 +116,10 @@ namespace SolastaWarlockClass
             Definition.SetRequiresDeity(false);
 
             Definition.AbilityScoresPriority.Clear();
-            Definition.AbilityScoresPriority.AddRange(new List<string> {Helpers.Stats.Charisma,
+            Definition.AbilityScoresPriority.AddRange(new List<string> {getMainStat(),
                                                                         Helpers.Stats.Dexterity,
                                                                         Helpers.Stats.Constitution,
-                                                                        Helpers.Stats.Intelligence,
+                                                                        getSecondaryStat(),
                                                                         Helpers.Stats.Strength,
                                                                         Helpers.Stats.Wisdom});
 
@@ -174,7 +174,7 @@ namespace SolastaWarlockClass
 
             var saving_throws = Helpers.ProficiencyBuilder.CreateSavingthrowProficiency("WarlockSavingthrowProficiency",
                                                                                         "",
-                                                                                        Helpers.Stats.Charisma, Helpers.Stats.Wisdom);
+                                                                                        getMainStat(), Helpers.Stats.Wisdom);
 
             var armor_proficiency = Helpers.ProficiencyBuilder.createCopy("WarlockArmorProficiency",
                                                                           "",
@@ -187,7 +187,7 @@ namespace SolastaWarlockClass
                                                                           "",
                                                                           "Feature/&WarlockWeaponProficiencyTitle",
                                                                           "",
-                                                                          DatabaseHelper.FeatureDefinitionProficiencys.ProficiencySorcererWeapon
+                                                                          DatabaseHelper.FeatureDefinitionProficiencys.ProficiencyClericWeapon
                                                                           );
 
             var skills = Helpers.PoolBuilder.createSkillProficiency("WarlockSkillProficiency",
@@ -276,7 +276,7 @@ namespace SolastaWarlockClass
                                                                                               "Feature/&WarlockClassSpellcastingTitle",
                                                                                               "Feature/&WarlockClassSpellcastingDescription",
                                                                                               warlock_spelllist,
-                                                                                              Helpers.Stats.Charisma,
+                                                                                              getMainStat(),
                                                                                               new List<int> { 2,  2,  2,  3,  3,  3, 3, 3, 3, 4,
                                                                                                               4, 4, 4, 4, 4, 4, 4, 4, 4, 4},
                                                                                               new List<int> { 2,  3,  4,  5,  6,  7,  8, 9,  10, 10,
@@ -624,8 +624,8 @@ namespace SolastaWarlockClass
                 effect.Copy(DatabaseHelper.FeatureDefinitionPowers.PowerDomainBattleDecisiveStrike.EffectDescription);
                 effect.DurationParameter = 1;
                 effect.DurationType = RuleDefinitions.DurationType.Round;
-                effect.SetSavingThrowDifficultyAbility(Helpers.Stats.Charisma);
-                effect.SavingThrowAbility = Helpers.Stats.Charisma;
+                effect.SetSavingThrowDifficultyAbility(getMainStat());
+                effect.SavingThrowAbility = getMainStat();
                 effect.hasSavingThrow = false;
                 effect.SetDifficultyClassComputation(RuleDefinitions.EffectDifficultyClassComputation.AbilityScoreAndProficiency);
                 effect.EffectForms.Clear();
@@ -870,7 +870,7 @@ namespace SolastaWarlockClass
         static void createEldritchBlast()
         {
             var agonizing_blast_title_string = "Feature/&WarlockAgonizingBlastInvocationTitle";
-            var agonizing_blast_description_string = "Feature/&WarlockAgonizingBlastInvocationDescription";
+            var agonizing_blast_description_string = setMainStatTextEntry("Feature/&WarlockAgonizingBlastInvocationDescription");
 
             agonizing_blast = Helpers.OnlyDescriptionFeatureBuilder.createOnlyDescriptionFeature("WarlockClassAgonizingBlastInvocation",
                                                                                                  "",
@@ -1215,7 +1215,7 @@ namespace SolastaWarlockClass
         static void createHealingBurst()
         {
             string title_string = "Feature/&WarlockAngelSubclassHealingBurstTitle";
-            string description_string = "Feature/&WarlockAngelSubclassHealingBurstDescription";
+            string description_string = setMainStatTextEntry("Feature/&WarlockAngelSubclassHealingBurstDescription");
 
             var effect = new EffectDescription();
             effect.Copy(DatabaseHelper.SpellDefinitions.HealingWord.EffectDescription);
@@ -1251,7 +1251,7 @@ namespace SolastaWarlockClass
                                                             1,
                                                             RuleDefinitions.UsesDetermination.Fixed,
                                                             RuleDefinitions.RechargeRate.ShortRest,
-                                                            ability: Helpers.Stats.Charisma
+                                                            ability: getMainStat()
                                                             );
         }
 
@@ -1259,7 +1259,7 @@ namespace SolastaWarlockClass
         static void createRadiantSoul()
         {
             var title_string = "Feature/&WarlockAngelSubclassRadiantSoulTitle";
-            var description_string = "Feature/&WarlockAngelSubclassRadiantSoulDescription";
+            var description_string = setMainStatTextEntry("Feature/&WarlockAngelSubclassRadiantSoulDescription");
 
             var extra_damage = Helpers.CopyFeatureBuilder<FeatureDefinitionAdditionalDamage>.createFeatureCopy("WarlockAngelSubclassRadiantSoulExtraDamage",
                                                                                                                "",
@@ -1289,7 +1289,7 @@ namespace SolastaWarlockClass
         static void createWrackedWithDivinity()
         {
             var title_string = "Feature/&WarlockAngelSubclassWrackedByDivinityTitle";
-            var description_string = "Feature/&WarlockAngelSubclassWrackedByDivinityDescription";
+            var description_string = setMainStatTextEntry("Feature/&WarlockAngelSubclassWrackedByDivinityDescription");
 
             var extra_damage = Helpers.CopyFeatureBuilder<FeatureDefinitionAdditionalDamage>.createFeatureCopy("WarlockAngelSubclassWrackedByDivinityMelee",
                                                                                                                "",
@@ -1360,7 +1360,7 @@ namespace SolastaWarlockClass
                                                                                                     0,
                                                                                                     RuleDefinitions.UsesDetermination.AbilityBonusPlusFixed,
                                                                                                     RuleDefinitions.RechargeRate.ShortRest,
-                                                                                                    uses_ability: Helpers.Stats.Charisma
+                                                                                                    uses_ability: getMainStat()
                                                                                                     );
         }
 
@@ -1538,7 +1538,7 @@ namespace SolastaWarlockClass
         static void createDarkOnesBlessing()
         {
             string title_string = "Feature/&WarlockFiendSubclassDarkOnesBlessingTitle";
-            string description_string = "Feature/&WarlockFiendSubclassDarkOnesBlessingDescription";
+            string description_string = setMainStatTextEntry("Feature/&WarlockFiendSubclassDarkOnesBlessingDescription");
 
             var effect = new EffectDescription();
             effect.Copy(DatabaseHelper.FeatureDefinitionPowers.PowerDomainBattleDivineWrath.EffectDescription);
@@ -1566,7 +1566,7 @@ namespace SolastaWarlockClass
                                                      RuleDefinitions.UsesDetermination.Fixed,
                                                      RuleDefinitions.RechargeRate.AtWill,
                                                      show_casting: false,
-                                                     ability: Helpers.Stats.Charisma);
+                                                     ability: getMainStat());
 
             dark_ones_blessing = Helpers.FeatureBuilder<NewFeatureDefinitions.InitiatorApplyPowerToSelfOnTargetSlain>
                                                                                     .createFeature("WarlockFiendSubclassDarkOnesBlessing",
@@ -1630,6 +1630,28 @@ namespace SolastaWarlockClass
                                                                                                                              c.SetExtendedSpellList(spelllist);
                                                                                                                          }
                                                                                                                          );
+        }
+
+
+        static string getMainStat()
+        {
+            return Main.settings.use_intelligence_as_main_stat ? Helpers.Stats.Intelligence : Helpers.Stats.Charisma;
+        }
+
+
+        static string getSecondaryStat()
+        {
+            return Main.settings.use_intelligence_as_main_stat ? Helpers.Stats.Charisma : Helpers.Stats.Intelligence;
+        }
+
+
+        static string setMainStatTextEntry(string original_string)
+        {
+            return Helpers.StringProcessing.insertStrings(original_string,
+                                                          Main.settings.use_intelligence_as_main_stat ? "Attribute/&IntelligenceTitleLong" : "Attribute/&CharismaTitleLong",
+                                                          original_string + getMainStat(),
+                                                          "<MAIN_STAT>"
+                                                          );
         }
 
 

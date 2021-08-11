@@ -9,6 +9,8 @@ using SolastaModApi;
 using SolastaModApi.Extensions;
 using SolastaWarlockClass;
 using System.Collections.Generic;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace SolastaWarlockClass
 {
@@ -19,6 +21,24 @@ namespace SolastaWarlockClass
         internal static void Error(Exception ex) => Logger?.Error(ex.ToString());
         internal static void Error(string msg) => Logger?.Error(msg);
         internal static UnityModManager.ModEntry.ModLogger Logger { get; private set; }
+
+
+        public class Settings
+        {
+            public bool use_intelligence_as_main_stat { get; }
+
+            internal Settings()
+            {
+
+                using (StreamReader settings_file = File.OpenText(UnityModManager.modsPath + @"/SolastaWarlockClass/settings.json"))
+                using (JsonTextReader reader = new JsonTextReader(settings_file))
+                {
+                    JObject jo = (JObject)JToken.ReadFrom(reader);
+                    use_intelligence_as_main_stat = (bool)jo["use_intelligence_as_main_stat"];
+                }
+            }
+        }
+        static public Settings settings = new Settings();
 
         internal static void LoadTranslations()
         {
