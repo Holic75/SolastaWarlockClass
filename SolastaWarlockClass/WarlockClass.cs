@@ -62,6 +62,7 @@ namespace SolastaWarlockClass
                                                             Helpers.WeaponProficiencies.Handaxe,
                                                             Helpers.WeaponProficiencies.Club,
                                                             Helpers.WeaponProficiencies.LongSword,
+                                                            Helpers.WeaponProficiencies.GreatAxe,
                                                             Helpers.WeaponProficiencies.Rapier,
                                                             Helpers.WeaponProficiencies.ShortSword,
                                                             Helpers.WeaponProficiencies.GreatSword,
