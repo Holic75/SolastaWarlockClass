@@ -970,6 +970,13 @@ namespace SolastaWarlockClass
 
             NewFeatureDefinitions.FeatureData.addFeatureRestrictions(agonizing_blast, new NewFeatureDefinitions.CanCastSpellRestriction(eldritch_blast, false));
             NewFeatureDefinitions.FeatureData.addFeatureRestrictions(miring_blast, new NewFeatureDefinitions.CanCastSpellRestriction(eldritch_blast, false));
+
+            var loremaster_pursuit_of_knowledege = DatabaseRepository.GetDatabase<FeatureDefinition>().GetElement("TraditionLoremasterSubclassPursuitOfKnowledgeCantrip", true) as NewFeatureDefinitions.FeatureDefinitionExtraSpellSelection;
+
+            if (loremaster_pursuit_of_knowledege != null)
+            {
+                Helpers.Misc.addSpellToSpelllist(loremaster_pursuit_of_knowledege.spell_list, eldritch_blast);
+            }
         }
 
 
