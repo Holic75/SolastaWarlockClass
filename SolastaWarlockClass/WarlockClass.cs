@@ -9,6 +9,7 @@ using static FeatureDefinitionSavingThrowAffinity;
 using Helpers = SolastaModHelpers.Helpers;
 using NewFeatureDefinitions = SolastaModHelpers.NewFeatureDefinitions;
 using ExtendedEnums = SolastaModHelpers.ExtendedEnums;
+using System;
 
 namespace SolastaWarlockClass
 {
@@ -316,6 +317,7 @@ namespace SolastaWarlockClass
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(weapon_proficiency, 1));
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(skills, 1));
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(warlock_spellcasting, 1));
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(Common.staff_focus, 1));
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(invocations[1], 2));
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(invocations[2], 2));
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(pact_boon, 3));
@@ -1124,6 +1126,22 @@ namespace SolastaWarlockClass
                                                                                             1,
                                                                                             cantrip_spelllist
                                                                                             );
+
+            var spell_spelllist = Helpers.SpelllistBuilder.createCombinedSpellListWithLevelRestriction("WarlockArchmageSubclassArcaneKnowledgeSpellSpelllist", "", "",
+                                                                         (warlock_spelllist, 10),
+                                                                         (DatabaseHelper.SpellListDefinitions.SpellListWizard, 1)
+                                                                         );
+
+            var extra_spell = Helpers.ExtraSpellSelectionBuilder.createExtraSpellSelection("WarlockArchmageSubclassArcaneKnowledgeSpell",
+                                                                                "",
+                                                                                Common.common_no_title,
+                                                                                Common.common_no_title,
+                                                                                warlock_class,
+                                                                                1,
+                                                                                1,
+                                                                                spell_spelllist
+                                                                                );
+
             var arcana_proficiency = Helpers.ProficiencyBuilder.CreateSkillsProficiency("WarlockArchmageSubclassArcaneKnowledgeArcanaProficiency",
                                                                                          "",
                                                                                          Common.common_no_title,
@@ -1139,6 +1157,7 @@ namespace SolastaWarlockClass
                                                                         FeatureDefinitionFeatureSet.FeatureSetMode.Union,
                                                                         false,
                                                                         extra_cantrip,
+                                                                        extra_spell,
                                                                         arcana_proficiency
                                                                         );
         }
@@ -1674,6 +1693,21 @@ namespace SolastaWarlockClass
             WarlockFeatureDefinitionSubclassChoice.Subclasses.Add(createAngelPatron().Name);
             WarlockFeatureDefinitionSubclassChoice.Subclasses.Add(createArchmagePatron().Name);
             WarlockFeatureDefinitionSubclassChoice.Subclasses.Add(createFiendPatron().Name);
+
+            Action<RulesetCharacterHero> fix_action = c =>
+            {
+                if (c.activeFeatures.Any(cc => cc.Value.Contains(Common.staff_focus)))
+                {
+                    return;
+                }
+
+                if (c.classesAndLevels.ContainsKey(WarlockClass))
+                {
+                    c.activeFeatures[AttributeDefinitions.GetClassTag(WarlockClass, 1)].Add(Common.staff_focus);
+                }
+            };
+
+            Common.postload_actions.Add(fix_action);
         }
 
         private static FeatureDefinitionSubclassChoice WarlockFeatureDefinitionSubclassChoice;

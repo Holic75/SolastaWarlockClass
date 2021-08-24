@@ -85,7 +85,7 @@ Subclass/&WarlockSubclassPatronArchmageDescription	A warlock beholden to an Arch
 Feature/&WarlockAngelSubclassArchmageSpellsTitle	Expanded Spell List
 Feature/&WarlockAngelSubclassArchmageSpellsDescription	The Archmage lets you choose from an expanded list of spells when you learn a warlock spell. The following spells are added to the warlock spell list for you.\n1st level: identify, magic missile\n2nd level: magic weapon, see invisibility\n3rd level: haste, lightning bolt\n4th level: identify creatures, greater invisibility\n5th level: mind twist, dominate person.
 Feature/&WarlockArchmageSubclassArcaneKnowledgeTitle	Arcane Knowledge
-Feature/&WarlockArchmageSubclassArcaneKnowledgeDescription	You gain proficiency in the Arcana skill, and you learn one cantrip of your choice from the Wizard spells list.
+Feature/&WarlockArchmageSubclassArcaneKnowledgeDescription	You gain proficiency in the Arcana skill, and you learn one cantrip and one extral level 1 spell of your choice from the Wizard spells list.
 Feature/&WarlockArchmageSubclassArcanePowerTitle	Arcane Power
 Feature/&WarlockArchmageSubclassArcanePowerDescription	At 6th level your patron grants you knowlege of a specific area of magecraft. Pick one wizard subclass, you gain the benefits of its 2nd level feature. If the feature would make certain spells count as wizard ones, you count them as warlock spells. If the feature would add certain spells to a wizard's spellbook, add them to your list of known spells instead.
 Feature/&WarlockArchmageSubclassArcaneResistanceTitle	Arcane Ward
