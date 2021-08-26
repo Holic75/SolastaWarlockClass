@@ -317,7 +317,11 @@ namespace SolastaWarlockClass
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(weapon_proficiency, 1));
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(skills, 1));
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(warlock_spellcasting, 1));
-            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(Common.staff_focus, 1));
+            var staff_focus = DatabaseRepository.GetDatabase<FeatureDefinition>().GetElement("UseStaffAsSpellcastingFocus", true);
+            if (staff_focus != null)
+            {
+                Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(staff_focus, 1));
+            }
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(invocations[1], 2));
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(invocations[2], 2));
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(pact_boon, 3));
@@ -1694,20 +1698,23 @@ namespace SolastaWarlockClass
             WarlockFeatureDefinitionSubclassChoice.Subclasses.Add(createArchmagePatron().Name);
             WarlockFeatureDefinitionSubclassChoice.Subclasses.Add(createFiendPatron().Name);
 
-            Action<RulesetCharacterHero> fix_action = c =>
+            var staff_focus = DatabaseRepository.GetDatabase<FeatureDefinition>().GetElement("UseStaffAsSpellcastingFocus", true);
+            if (staff_focus != null)
             {
-                if (c.activeFeatures.Any(cc => cc.Value.Contains(Common.staff_focus)))
+                Action<RulesetCharacterHero> fix_action = c =>
                 {
-                    return;
-                }
+                    if (c.activeFeatures.Any(cc => cc.Value.Contains(staff_focus)))
+                    {
+                        return;
+                    }
 
-                if (c.classesAndLevels.ContainsKey(WarlockClass))
-                {
-                    c.activeFeatures[AttributeDefinitions.GetClassTag(WarlockClass, 1)].Add(Common.staff_focus);
-                }
-            };
-
-            Common.postload_actions.Add(fix_action);
+                    if (c.classesAndLevels.ContainsKey(WarlockClass))
+                    {
+                        c.activeFeatures[AttributeDefinitions.GetClassTag(WarlockClass, 1)].Add(staff_focus);
+                    }
+                };
+                Common.postload_actions.Add(fix_action);
+            }
         }
 
         private static FeatureDefinitionSubclassChoice WarlockFeatureDefinitionSubclassChoice;
