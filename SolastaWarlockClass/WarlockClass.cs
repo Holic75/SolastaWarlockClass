@@ -261,7 +261,8 @@ namespace SolastaWarlockClass
             var new_spells = new SpellDefinition[]{ NewFeatureDefinitions.SpellData.getSpell("SunlightBladeSpell"),
                                                     NewFeatureDefinitions.SpellData.getSpell("ThunderStrikeSpell"),
                                                     NewFeatureDefinitions.SpellData.getSpell("IceStrikeSpell"),
-                                                    NewFeatureDefinitions.SpellData.getSpell("HellishRebukeSpell")
+                                                    NewFeatureDefinitions.SpellData.getSpell("HellishRebukeSpell"),
+                                                    NewFeatureDefinitions.SpellData.getSpell("VulnerabilityHexSpell")
                                                   };
 
             foreach (var s in new_spells)
@@ -1325,7 +1326,7 @@ namespace SolastaWarlockClass
             var extra_damage = Helpers.CopyFeatureBuilder<FeatureDefinitionAdditionalDamage>.createFeatureCopy("WarlockAngelSubclassWrackedByDivinityMelee",
                                                                                                                "",
                                                                                                                title_string,
-                                                                                                               description_string,
+                                                                                                               Common.common_no_title,
                                                                                                                null,
                                                                                                                DatabaseHelper.FeatureDefinitionAdditionalDamages.AdditionalDamagePaladinDivineSmite,
                                                                                                                a =>
@@ -1343,7 +1344,7 @@ namespace SolastaWarlockClass
             var extra_damage_ranged = Helpers.CopyFeatureBuilder<FeatureDefinitionAdditionalDamage>.createFeatureCopy("WarlockAngelSubclassWrackedByDivinityRanged",
                                                                                                                       "",
                                                                                                                       title_string,
-                                                                                                                      description_string,
+                                                                                                                      Common.common_no_title,
                                                                                                                       null,
                                                                                                                       extra_damage,
                                                                                                                       a =>
@@ -1356,7 +1357,7 @@ namespace SolastaWarlockClass
             var condition = Helpers.ConditionBuilder.createConditionWithInterruptions("WarlockAngelSubclassWrackedByDivinityCondition",
                                                                                       "",
                                                                                       title_string,
-                                                                                      description_string,
+                                                                                      "Feature/&ConditionWarlockAngelSubclassWrackedByDivinityDescription",
                                                                                       null,
                                                                                       DatabaseHelper.ConditionDefinitions.ConditionBrandingSmite,
                                                                                       new RuleDefinitions.ConditionInterruption[] { RuleDefinitions.ConditionInterruption.AttacksAndDamages },

@@ -44,7 +44,7 @@ Feature/&WarlockEldritchStrikeInvocationTitle	Eldritch Strike
 Feature/&WarlockEldritchStrikeInvocationDescription	Once per turn when you hit a creature with a melee weapon (if you have Pact of The Blade boon), or with an arrow (if you have Pact of the Arrow boon), you can expend a warlock spell slot to deal an extra 1d10 force damage to the target per level of the spell slot, the target is also knocked prone.
 Reaction/&SpendWarlockEldritchStrikeInvocationPowerReactDescription	Expend warlock spell slot to deal 1d10 force damage per slot level and knock target prone.
 Feature/&WarlockClassPactBoonTitle	Pact Boon
-Feature/&WarlockClassPactBoonDescription	At 3rd level, your otherworldly patron bestows a gift upon you for your loyal service.
+Feature/&WarlockClassPactBoonDescription	Your otherworldly patron bestows a gift upon you for your loyal service.
 Feature/&WarlockClassPactOfBladeTitle	Pact of the Blade
 Feature/&WarlockClassPactOfBladeDescription	You gain proficiency with all melee weapons. In addition, every melee weapon you hold counts as magical for purpose of overcoming resistance and immunity to nonmagical attacks and damage.
 Feature/&WarlockClassPactOfTomeTitle	Pact of the Tome
@@ -52,7 +52,7 @@ Feature/&WarlockClassPactOfTomeDescription	You learn three cantrips from any cla
 Feature/&WarlockClassPactOfArrowTitle	Pact of the Arrow
 Feature/&WarlockClassPactOfArrowDescription	You gain proficiency with all bows. In  addition, every bow you hold counts as magical for purpose of overcoming resistance and immunity to nonmagical attacks and damage. You can also create arrows at will.
 Spell/&EldritchBlastTitle	Eldritch Blast
-Spell/&EldritchBlastDescription	A beam of crackling energy streaks toward a creature within range. Make a ranged spell attack against the target. On a hit, the target takes 1d10 force damage.
+Spell/&EldritchBlastDescription	Send a beam of crackling energy toward your enemy.
 Subclass/&WarlockSubclassPatronFiendTitle	Fiend Patron
 Subclass/&WarlockSubclassPatronFiendDescription	You have made a pact with a fiend from the lower planes of existence, a being whose aims are evil, even if you strive against those aims. Such beings desire the corruption or destruction of all things, ultimately including you. Fiends powerful enough to forge a pact include demon lords such as Demogorgon, Orcus, Fraz'Urb-luu, and Baphomet; archdevils such as Asmodeus, Dispater, Mephistopheles, and Belial; pit fiends and balors that are especially mighty; and ultroloths and other lords of the yugoloths.
 Feature/&WarlockFiendSubclassFiendSpellsTitle	Expanded Spell List
@@ -60,7 +60,7 @@ Feature/&WarlockFiendSubclassFiendSpellsDescription	The Fiend lets you choose fr
 Feature/&WarlockFiendSubclassDarkOnesBlessingTitle	Dark One's Blessing
 Feature/&WarlockFiendSubclassDarkOnesBlessingDescription	Starting at 1st level, when you reduce a hostile creature to 0 hit points, you gain temporary hit points equal to your <MAIN_STAT> modifier + your warlock level (minimum of 1).
 Feature/&WarlockFiendSubclassDarkOnesOwnLuckTitle	Dark One's Own Luck
-Feature/&WarlockFiendSubclassDarkOnesOwnLuckDescription	Starting at 6th level, you can reroll a failed savingthrow. Once you use this feature, you can't use it again until you finish a short or long rest.
+Feature/&WarlockFiendSubclassDarkOnesOwnLuckDescription	You can reroll a failed savingthrow. Once you use this feature, you can't use it again until you finish a short or long rest.
 Reaction/&ConsumePowerUseWarlockFiendSubclassDarkOnesOwnLuckPowerDescription	You have failed a saving throw against {0} but can attempt to reroll it.
 Feature/&WarlockFiendFiendishResilenceTitle	Fiendish Resilience
 Feature/&WarlockFiendFiendishResilenceDescription	At 10th level, you gain Resistance to one damage type of your choice.
@@ -71,11 +71,12 @@ Feature/&WarlockAngelSubclassAngelSpellsDescription	The Angel lets you choose fr
 Feature/&WarlockAngelSubclassHolyWarriorTitle	Holy Warrior
 Feature/&WarlockAngelSubclassHolyWarriorDescription	At 1st level, you acquire the training necessary to effectively arm yourself for battle. You gain proficiency with medium armor and shields. In addition, you gain proficiency with Religion.
 Feature/&WarlockAngelSubclassWrackedByDivinityTitle	Wracked with Divinity
-Feature/&WarlockAngelSubclassWrackedByDivinityDescription	Starting at 1st level, your patron can channel chaotic divine energy through your body. As a bonus action, you can touch a weapon to turn it into a magic weapon that deals an additional 1d10 radiant damage on its next hit. This effect last for one minute, and can be used a number of times equal to your <MAIN_STAT> modifier. Once you use up this feature, you can't use it again until you finish a short or long rest.
+Feature/&WarlockAngelSubclassWrackedByDivinityDescription	Your patron can channel chaotic divine energy through your body. As a bonus action, you can touch a weapon to turn it into a magic weapon that deals an additional 1d10 radiant damage on its next hit. This effect last for one minute, and can be used a number of times equal to your <MAIN_STAT> modifier. Once you use up this feature, you can't use it again until you finish a short or long rest.
+Feature/&ConditionWarlockAngelSubclassWrackedByDivinityDescription	Deal 1d10 radiant damage on your next hit.
 Feature/&WarlockAngelSubclassRadiantSoulTitle	Radiant Soul
-Feature/&WarlockAngelSubclassRadiantSoulDescription	Starting at 6th level, your link to your Patron allows you to serve as a conduit for radiant energy. You have resistance to radiant damage, and when you cast any instantaneous effect spell that deals radiant or fire damage, you add your <MAIN_STAT> modifier to one radiant or fire damage roll of that spell. 
+Feature/&WarlockAngelSubclassRadiantSoulDescription	Your link to your Patron allows you to serve as a conduit for radiant energy. You have resistance to radiant damage, and when you cast any instantaneous effect spell that deals radiant or fire damage, you add your <MAIN_STAT> modifier to one radiant or fire damage roll of that spell. 
 Feature/&WarlockAngelSubclassHealingBurstTitle	Healing Burst
-Feature/&WarlockAngelSubclassHealingBurstDescription	Starting at 10th level, as a bonus action you can fill the 30-foot radius sphere around you with healing energy, restoring a number of hit points equal to your warlock level + your <MAIN_STAT> modifier to all your allies in the area. Once you use this feature, you can't use it again until you finish a short rest.
+Feature/&WarlockAngelSubclassHealingBurstDescription	As a bonus actionm you can fill the 30-foot radius sphere around you with healing energy, restoring a number of hit points equal to your warlock level + your <MAIN_STAT> modifier to all your allies in the area. Once you use this feature, you can't use it again until you finish a short rest.
 Feedback/&AdditionalDamageWrackedByDivinityFormat	Extra damage due to Wracked with Divinity
 Feedback/&AdditionalDamageWrackedByDivinityLine	Extra damage due to Wracked with Divinity
 Feedback/&AdditionalDamageRadiantSoulLine	Extra damage due to Radiant Soul
@@ -87,6 +88,6 @@ Feature/&WarlockAngelSubclassArchmageSpellsDescription	The Archmage lets you cho
 Feature/&WarlockArchmageSubclassArcaneKnowledgeTitle	Arcane Knowledge
 Feature/&WarlockArchmageSubclassArcaneKnowledgeDescription	You gain proficiency in the Arcana skill, and you learn one cantrip and one extral level 1 spell of your choice from the Wizard spells list.
 Feature/&WarlockArchmageSubclassArcanePowerTitle	Arcane Power
-Feature/&WarlockArchmageSubclassArcanePowerDescription	At 6th level your patron grants you knowlege of a specific area of magecraft. Pick one wizard subclass, you gain the benefits of its 2nd level feature. If the feature would make certain spells count as wizard ones, you count them as warlock spells. If the feature would add certain spells to a wizard's spellbook, add them to your list of known spells instead.
+Feature/&WarlockArchmageSubclassArcanePowerDescription	Your patron grants you knowlege of a specific area of magecraft. Pick one wizard subclass, you gain the benefits of its 2nd level feature. If the feature would make certain spells count as wizard ones, you count them as warlock spells. If the feature would add certain spells to a wizard's spellbook, add them to your list of known spells instead.
 Feature/&WarlockArchmageSubclassArcaneResistanceTitle	Arcane Ward
-Feature/&WarlockArchmageSubclassArcaneResistanceDescription	Starting at 10th level you receive +1 bonus to all your savingthrows against spells. In addition, you gain resitance against force damage.
+Feature/&WarlockArchmageSubclassArcaneResistanceDescription	You receive +1 bonus to all your savingthrows against spells. In addition, you gain resitance against force damage.
