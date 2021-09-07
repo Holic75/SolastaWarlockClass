@@ -347,7 +347,8 @@ namespace SolastaWarlockClass
             {
                 DatabaseHelper.ItemDefinitions.WandOfLightningBolts,
                 DatabaseHelper.ItemDefinitions.StaffOfFire,
-                DatabaseHelper.ItemDefinitions.ArcaneShieldstaff
+                DatabaseHelper.ItemDefinitions.ArcaneShieldstaff,
+                DatabaseHelper.ItemDefinitions.WizardClothes_Alternate
             };
 
             foreach (ItemDefinition item in itemlist)
