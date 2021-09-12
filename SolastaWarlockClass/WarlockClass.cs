@@ -1031,7 +1031,7 @@ namespace SolastaWarlockClass
                                                                         title_string,
                                                                         description_string,
                                                                         false,
-                                                                        FeatureDefinitionFeatureSet.FeatureSetMode.Exclusion,
+                                                                        FeatureDefinitionFeatureSet.FeatureSetMode.Union,
                                                                         true,
                                                                         savingthrow_bonus,
                                                                         DatabaseHelper.FeatureDefinitionDamageAffinitys.DamageAffinityForceDamageResistance
