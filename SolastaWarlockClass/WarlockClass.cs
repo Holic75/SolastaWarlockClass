@@ -781,10 +781,55 @@ namespace SolastaWarlockClass
                                                             false,
                                                             FeatureDefinitionFeatureSet.FeatureSetMode.Union,
                                                             false,
-                                                            immunity,
                                                             DatabaseHelper.FeatureDefinitionSenses.SenseDarkvision24
                                                             );
 
+            var darkness_obscured_feature = Helpers.FeatureBuilder<NewFeatureDefinitions.ObscuredByDarkness>.createFeature("ObscuredByDarknessFeature",
+                                                                                                                           "4214e21f-1fc8-4217-8746-4eadb608788a",
+                                                                                                                           Common.common_no_title,
+                                                                                                                           Common.common_no_title,
+                                                                                                                           Common.common_no_icon,
+                                                                                                                           a =>
+                                                                                                                           {
+                                                                                                                               a.ignore_features = new List<FeatureDefinition>
+                                                                                                                               {
+                                                                                                                                   devils_sight
+                                                                                                                               };
+                                                                                                                           }
+                                                                                                                           );
+
+            var darkness_condition = Helpers.CopyFeatureBuilder<ConditionDefinition>.createFeatureCopy("ObscuredByDarknesCondition",
+                                                                                                       "a2d2b04f-8aa2-4690-8728-716df3cc47f4",
+                                                                                                       "",
+                                                                                                       "",
+                                                                                                       null,
+                                                                                                       DatabaseHelper.ConditionDefinitions.ConditionHeavilyObscured,
+                                                                                                       a =>
+                                                                                                       {
+                                                                                                           a.features = new List<FeatureDefinition>
+                                                                                                           {
+                                                                                                               darkness_obscured_feature
+                                                                                                           };
+                                                                                                       }
+                                                                                                      );
+            NewFeatureDefinitions.Polymorph.unstransferableConditions.Add(darkness_condition);
+
+            var darkness = DatabaseHelper.SpellDefinitions.Darkness;
+            darkness.effectDescription.effectForms.Find(e => e.formType == EffectForm.EffectFormType.Condition).conditionForm.conditionDefinition = darkness_condition;
+
+            var see_in_darkness = Helpers.FeatureBuilder<NewFeatureDefinitions.IgnoreDynamicVisionImpairement>.createFeature("WarlockDevilsSightSeeInDarknessFeature",
+                                                                                                   "5552e24a-8a59-4646-a63e-0bf220e2cfdd",
+                                                                                                   Common.common_no_title,
+                                                                                                   Common.common_no_title,
+                                                                                                   Common.common_no_icon,
+                                                                                                   a =>
+                                                                                                   {
+                                                                                                       a.required_features.Add(darkness_obscured_feature);
+                                                                                                       a.forbidden_features.Add(DatabaseHelper.FeatureDefinitionCombatAffinitys.CombatAffinityHeavilyObscured);
+                                                                                                       a.max_range = 24.0f;
+                                                                                                   }
+                                                                                                   );
+            devils_sight.featureSet.Add(see_in_darkness);
         }
 
 
