@@ -1369,6 +1369,18 @@ namespace SolastaWarlockClass
             var title_string = "Feature/&WarlockAngelSubclassWrackedByDivinityTitle";
             var description_string = setMainStatTextEntry("Feature/&WarlockAngelSubclassWrackedByDivinityDescription");
 
+            var use_charisma_for_weapons = Helpers.FeatureBuilder<NewFeatureDefinitions.ReplaceWeaponAbilityScoreForWeapons>
+                                                                                    .createFeature("WarlockAngelSubclassWrackedByDivinityOvewriteWeaponStat",
+                                                                                                   "",
+                                                                                                   Common.common_no_title,
+                                                                                                   Common.common_no_title,
+                                                                                                   Common.common_no_icon,
+                                                                                                   a =>
+                                                                                                   {
+                                                                                                       a.abilityScores = new List<string> { getMainStat() };
+                                                                                                   }                           
+                                                                                                   );
+
             var extra_damage = Helpers.CopyFeatureBuilder<FeatureDefinitionAdditionalDamage>.createFeatureCopy("WarlockAngelSubclassWrackedByDivinityMelee",
                                                                                                                "",
                                                                                                                title_string,
@@ -1403,12 +1415,13 @@ namespace SolastaWarlockClass
             var condition = Helpers.ConditionBuilder.createConditionWithInterruptions("WarlockAngelSubclassWrackedByDivinityCondition",
                                                                                       "",
                                                                                       title_string,
-                                                                                      "Feature/&ConditionWarlockAngelSubclassWrackedByDivinityDescription",
+                                                                                      setMainStatTextEntry("Feature/&ConditionWarlockAngelSubclassWrackedByDivinityDescription"),
                                                                                       null,
                                                                                       DatabaseHelper.ConditionDefinitions.ConditionBrandingSmite,
                                                                                       new RuleDefinitions.ConditionInterruption[] { RuleDefinitions.ConditionInterruption.AttacksAndDamages },
                                                                                       extra_damage,
                                                                                       extra_damage_ranged,
+                                                                                      use_charisma_for_weapons,
                                                                                       DatabaseHelper.FeatureDefinitionAttackModifiers.AttackModifierMartialSpellBladeMagicWeapon
                                                                                       );
             NewFeatureDefinitions.ConditionsData.no_refresh_conditions.Add(condition);
