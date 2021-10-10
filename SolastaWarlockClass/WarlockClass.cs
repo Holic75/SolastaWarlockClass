@@ -1397,6 +1397,7 @@ namespace SolastaWarlockClass
                                                                                                                    a.damageDiceNumber = 1;
                                                                                                                    a.damageAdvancement = RuleDefinitions.AdditionalDamageAdvancement.None;
                                                                                                                    a.requiredProperty = RuleDefinitions.AdditionalDamageRequiredProperty.MeleeWeapon;
+                                                                                                                   a.attackModeOnly = true;
                                                                                                                }
                                                                                                                );
             var extra_damage_ranged = Helpers.CopyFeatureBuilder<FeatureDefinitionAdditionalDamage>.createFeatureCopy("WarlockAngelSubclassWrackedByDivinityRanged",
