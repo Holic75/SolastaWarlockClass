@@ -218,3 +218,13 @@ ObscuredByDarknessFeature	4214e21f-1fc8-4217-8746-4eadb608788a
 ObscuredByDarknesCondition	a2d2b04f-8aa2-4690-8728-716df3cc47f4
 WarlockDevilsSightSeeInDarknessFeature	5552e24a-8a59-4646-a63e-0bf220e2cfdd
 WarlockAngelSubclassWrackedByDivinityOvewriteWeaponStat	41358e6e-5f0d-4d12-b0c6-61d0da95af66
+WarlockClassMysticArcanumSpelllist	cfabadb2-220f-464a-b755-c9475aa86a35
+WarlockClassMysticArcanum	991c7bf9-f049-4c71-bd95-43e7d8e645fa
+WarlockClassMysticArcanum11	6b8051e1-8c55-4bdd-9324-f1141bc446c8
+MysticArcanumCircleOfDeath	0fd4c89f6c077134dd-9324-f1141bc446c8
+MysticArcanumConjureFey	83cdb7051d75bfe4dd-9324-f1141bc446c8
+MysticArcanumEyebite	ea9050011d6bef24dd-9324-f1141bc446c8
+MysticArcanumTrueSeeing	16c9f67d4a89cbf4dd-9324-f1141bc446c8
+WarlockClassMysticArcanum13	df49f8f1-f8bd-4cb8-aeeb-04eef4e6ff6a
+WarlockClassMysticArcanum15	52f57dd7-6cf1-4155-bf8e-5a3520635071
+WarlockClassMysticArcanum17	dda0fd1c-bb4a-4847-89c2-8afc8c3dcec9

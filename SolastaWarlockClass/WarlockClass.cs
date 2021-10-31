@@ -110,7 +110,7 @@ namespace SolastaWarlockClass
             Definition.GuiPresentation.Description = "Class/&WarlockClassDescription";
             Definition.GuiPresentation.SetSpriteReference(warlock_class_image);
 
-            Definition.SetClassAnimationId(AnimationDefinitions.ClassAnimationId.Sorcerer);
+            Definition.SetClassAnimationId(AnimationDefinitions.ClassAnimationId.Wizard);
             Definition.SetClassPictogramReference(sorcerer.ClassPictogramReference);
             Definition.SetDefaultBattleDecisions(sorcerer.DefaultBattleDecisions);
             Definition.SetHitDice(RuleDefinitions.DieType.D8);
@@ -243,7 +243,7 @@ namespace SolastaWarlockClass
                                                                                     DatabaseHelper.SpellDefinitions.HypnoticPattern,
                                                                                     DatabaseHelper.SpellDefinitions.RemoveCurse,
                                                                                     DatabaseHelper.SpellDefinitions.Tongues,
-                                                                                    DatabaseHelper.SpellDefinitions.VampiricTouchIntelligence
+                                                                                    DatabaseHelper.SpellDefinitions.VampiricTouch
                                                                                 },
                                                                                 new List<SpellDefinition>
                                                                                 {
@@ -284,30 +284,30 @@ namespace SolastaWarlockClass
                                                                                                               4, 4, 4, 4, 4, 4, 4, 4, 4, 4},
                                                                                               new List<int> { 2,  3,  4,  5,  6,  7,  8, 9,  10, 10,
                                                                                                              11, 11, 12, 12, 13, 13, 14, 14, 15, 15},
-                                                                                              Helpers.Misc.createSpellSlotsByLevel(new List<int> { 1, 0, 0, 0, 0 },
-                                                                                                                                   new List<int> { 2, 0, 0, 0, 0 },
-                                                                                                                                   new List<int> { 2, 2, 0, 0, 0 },//3
-                                                                                                                                   new List<int> { 2, 2, 0, 0, 0 },//4
-                                                                                                                                   new List<int> { 2, 2, 2, 0, 0 },//5
-                                                                                                                                   new List<int> { 2, 2, 2, 0, 0 },//6
-                                                                                                                                   new List<int> { 2, 2, 2, 2, 0 },//7
-                                                                                                                                   new List<int> { 2, 2, 2, 2, 0 },//8
-                                                                                                                                   new List<int> { 2, 2, 2, 2, 2 },//9
-                                                                                                                                   new List<int> { 2, 2, 2, 2, 2 },//10
-                                                                                                                                   new List<int> { 3, 3, 3, 3, 3 },//11
-                                                                                                                                   new List<int> { 3, 3, 3, 3, 3 },//12
-                                                                                                                                   new List<int> { 3, 3, 3, 3, 3 },//13
-                                                                                                                                   new List<int> { 3, 3, 3, 3, 3 },//14
-                                                                                                                                   new List<int> { 3, 3, 3, 3, 3 },//15
-                                                                                                                                   new List<int> { 3, 3, 3, 3, 3 },//16
-                                                                                                                                   new List<int> { 4, 4, 4, 4, 4 },//17
-                                                                                                                                   new List<int> { 4, 4, 4, 4, 4 },//18
-                                                                                                                                   new List<int> { 4, 4, 4, 4, 4 },//19
-                                                                                                                                   new List<int> { 4, 4, 4, 4, 4 }//20
+                                                                                              Helpers.Misc.createSpellSlotsByLevel(new List<int> { 1, 0, 0, 0, 0, 0, 0},
+                                                                                                                                   new List<int> { 2, 0, 0, 0, 0, 0, 0},
+                                                                                                                                   new List<int> { 2, 2, 0, 0, 0, 0, 0},//3
+                                                                                                                                   new List<int> { 2, 2, 0, 0, 0, 0, 0},//4
+                                                                                                                                   new List<int> { 2, 2, 2, 0, 0, 0, 0},//5
+                                                                                                                                   new List<int> { 2, 2, 2, 0, 0, 0, 0},//6
+                                                                                                                                   new List<int> { 2, 2, 2, 2, 0, 0, 0},//7
+                                                                                                                                   new List<int> { 2, 2, 2, 2, 0, 0, 0 },//8
+                                                                                                                                   new List<int> { 2, 2, 2, 2, 2, 0, 0 },//9
+                                                                                                                                   new List<int> { 2, 2, 2, 2, 2, 0, 0 },//10
+                                                                                                                                   new List<int> { 3, 3, 3, 3, 3, 0, 0 },//11
+                                                                                                                                   new List<int> { 3, 3, 3, 3, 3, 0, 0 },//12
+                                                                                                                                   new List<int> { 3, 3, 3, 3, 3, 0, 0 },//13
+                                                                                                                                   new List<int> { 3, 3, 3, 3, 3, 0, 0 },//14
+                                                                                                                                   new List<int> { 3, 3, 3, 3, 3, 0, 0 },//15
+                                                                                                                                   new List<int> { 3, 3, 3, 3, 3, 0, 0 },//16
+                                                                                                                                   new List<int> { 4, 4, 4, 4, 4, 0, 0 },//17
+                                                                                                                                   new List<int> { 4, 4, 4, 4, 4, 0, 0 },//18
+                                                                                                                                   new List<int> { 4, 4, 4, 4, 4, 0, 0 },//19
+                                                                                                                                   new List<int> { 4, 4, 4, 4, 4, 0, 0 }//20
                                                                                                                                    )
                                                                                               );
             warlock_spellcasting.replacedSpells = new List<int> {0, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-                                                                 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+                                                                 1, 0, 1, 0, 1, 0, 1, 0, 1, 0};
             warlock_spellcasting.SetSlotsRecharge(RuleDefinitions.RechargeRate.ShortRest);
 
             createPactBoon();
@@ -323,6 +323,7 @@ namespace SolastaWarlockClass
             {
                 Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(staff_focus, 1));
             }
+
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(invocations[1], 2));
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(invocations[2], 2));
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(pact_boon, 3));
@@ -484,17 +485,13 @@ namespace SolastaWarlockClass
                                                                                                  (DatabaseHelper.SpellListDefinitions.SpellListCleric, 0),
                                                                                                  (DatabaseHelper.SpellListDefinitions.SpellListPaladin, 0),
                                                                                                  (DatabaseHelper.SpellListDefinitions.SpellListRanger, 0),
-                                                                                                 (DatabaseHelper.SpellListDefinitions.SpellListWizardGreenmage, 0)
+                                                                                                 (DatabaseHelper.SpellListDefinitions.SpellListWizardGreenmage, 0),
+                                                                                                 (DatabaseHelper.SpellListDefinitions.SpellListDruid, 0)
                                                                                                  );
             var vicious_mockery = NewFeatureDefinitions.SpellData.getSpell("ViciousMockerySpell");
             if (vicious_mockery != null)
             {
                 Helpers.Misc.addSpellToSpelllist(spelllist, vicious_mockery);
-            }
-            var shillelagh = NewFeatureDefinitions.SpellData.getSpell("ShillelaghSpell");
-            if (shillelagh != null)
-            {
-                Helpers.Misc.addSpellToSpelllist(spelllist, shillelagh);
             }
 
             pact_of_tome = Helpers.ExtraSpellSelectionBuilder.createExtraCantripSelection("WarlockClassPactOfTome",
@@ -812,7 +809,6 @@ namespace SolastaWarlockClass
                                                                                                            };
                                                                                                        }
                                                                                                       );
-            NewFeatureDefinitions.Polymorph.unstransferableConditions.Add(darkness_condition);
 
             var darkness = DatabaseHelper.SpellDefinitions.Darkness;
             darkness.effectDescription.effectForms.Find(e => e.formType == EffectForm.EffectFormType.Condition).conditionForm.conditionDefinition = darkness_condition;
@@ -973,7 +969,7 @@ namespace SolastaWarlockClass
             damage.damageForm.damageType = Helpers.DamageTypes.Force;
             damage.damageForm.diceNumber = 1;
             damage.damageForm.dieType = RuleDefinitions.DieType.D10;
-            damage.applyAbilityBonus = false;
+            damage.addBonusMode = RuleDefinitions.AddBonusMode.AbilityBonus;
             effect.effectForms.Add(damage);
 
             eldritch_blast = Helpers.GenericSpellBuilder<NewFeatureDefinitions.SpellWithCasterFeatureDependentEffects>
@@ -996,7 +992,7 @@ namespace SolastaWarlockClass
             agonizing_effect.effectForms.Clear();
             var damage2 = new EffectForm();
             damage2.Copy(damage);
-            damage2.applyAbilityBonus = true;
+            damage2.addBonusMode = RuleDefinitions.AddBonusMode.AbilityBonus;
             agonizing_effect.effectForms.Add(damage2);
 
 
@@ -1314,7 +1310,7 @@ namespace SolastaWarlockClass
             effect_form.healingForm.dieType = RuleDefinitions.DieType.D1;
             effect_form.SetApplyLevel(EffectForm.LevelApplianceType.Multiply);
             effect_form.SetLevelType(RuleDefinitions.LevelSourceType.ClassLevel);
-            effect_form.applyAbilityBonus = true;
+            effect_form.addBonusMode = RuleDefinitions.AddBonusMode.AbilityBonus;
             effect.EffectForms.Add(effect_form);
 
 
@@ -1640,7 +1636,7 @@ namespace SolastaWarlockClass
             effect_form.FormType = EffectForm.EffectFormType.TemporaryHitPoints;
             effect_form.temporaryHitPointsForm.dieType = RuleDefinitions.DieType.D1;
             effect_form.temporaryHitPointsForm.diceNumber = 1;
-            effect_form.applyAbilityBonus = true;
+            effect_form.addBonusMode = RuleDefinitions.AddBonusMode.AbilityBonus;
             effect_form.applyLevel = EffectForm.LevelApplianceType.Multiply;
             effect_form.levelMultiplier = 1;
             effect.EffectForms.Add(effect_form);

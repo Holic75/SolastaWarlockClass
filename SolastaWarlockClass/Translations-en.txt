@@ -9,7 +9,9 @@ Feature/&WarlockWeaponProficiencyTitle	Warlock Weapon Proficiencies
 Feature/&WarlockArmorProficiencyTitle	Warlock Armor Proficiencies
 Feature/&WarlockClassSkillPointPoolTitle	Warlock Skills
 Feature/&WarlockClassSpellcastingTitle	Warlock Spellcasting
-Feature/&WarlockClassSpellcastingDescription	Can cast spells from Warlock Spells list
+Feature/&WarlockClassSpellcastingDescription	Can cast level 1 - 5 spells from Warlock Spells list. Your spell slots recharge after short rest.
+Feature/&WarlockClassMysticArcanumTitle	Mystic Arcanum
+Feature/&WarlockClassMysticArcanumDescription	Gain ability to cast higher level spells. These spell slots recharge after long rest.
 Feature/&WarlockAgonizingBlastInvocationTitle	Agonizing Blast
 Feature/&WarlockAgonizingBlastInvocationDescription	When you cast eldritch blast, add your <MAIN_STAT> modifier to the damage it deals on a hit.
 Feature/&WarlockMiringBlastInvocationTitle	Miring Blast
