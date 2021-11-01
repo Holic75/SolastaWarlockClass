@@ -228,3 +228,11 @@ MysticArcanumTrueSeeing	16c9f67d4a89cbf4dd-9324-f1141bc446c8
 WarlockClassMysticArcanum13	df49f8f1-f8bd-4cb8-aeeb-04eef4e6ff6a
 WarlockClassMysticArcanum15	52f57dd7-6cf1-4155-bf8e-5a3520635071
 WarlockClassMysticArcanum17	dda0fd1c-bb4a-4847-89c2-8afc8c3dcec9
+WarlockClassMysticArcanum6	377ae350-af01-4f60-b9af-ab4a593ec482
+WarlockClassMysticArcanumSpellList6	35be6e72-f879-440e-882d-dd2de3ca05f0
+WarlockClassMysticArcanum7	7ea561c7-58ea-4c4b-91e3-2de820d061b1
+WarlockClassMysticArcanumSpellList7	d9e39acd-c466-45f0-8ce4-a76758344f37
+WarlockClassMysticArcanumSpellcasting	226a4d40-bf39-4add-8d87-1bae660912a1
+WarlockClassMysticArcanum6CircleOfDeath	377ae350-af01-4f60242fe6529aa816
+WarlockClassMysticArcanum6Eyebite	377ae350-af01-4f60be7b2d59750659
+WarlockClassMysticArcanum6TrueSeeing	377ae350-af01-4f60aad67ecadafaa5

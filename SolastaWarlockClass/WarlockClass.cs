@@ -22,9 +22,9 @@ namespace SolastaWarlockClass
 
         static public CharacterClassDefinition warlock_class;
         static public SpellListDefinition warlock_spelllist;
-
         static public NewFeatureDefinitions.WarlockCastSpell warlock_spellcasting;
         static public Dictionary<int, FeatureDefinitionFeatureSet> invocations = new Dictionary<int, FeatureDefinitionFeatureSet>();
+        static public NewFeatureDefinitions.FeatureDefinitionExtraSpellSelection[] mystic_arcanum = new NewFeatureDefinitions.FeatureDefinitionExtraSpellSelection[4];
         static public FeatureDefinition agonizing_blast;
         static public FeatureDefinitionBonusCantrips repelling_blast;
         static public FeatureDefinition miring_blast;
@@ -37,6 +37,7 @@ namespace SolastaWarlockClass
         static public Dictionary<int, NewFeatureDefinitions.FeatureDefinitionExtraSpellSelection> book_of_secrets = new Dictionary<int, NewFeatureDefinitions.FeatureDefinitionExtraSpellSelection>();
         static public FeatureDefinitionProficiency beguiling_influence;
         static public FeatureDefinitionFeatureSet devils_sight;
+        //life drinker - charisma damage on hit with pact weapon
 
 
         static public FeatureDefinitionFeatureSet pact_boon;
@@ -255,6 +256,18 @@ namespace SolastaWarlockClass
                                                                                 {
                                                                                     DatabaseHelper.SpellDefinitions.HoldMonster,
                                                                                     DatabaseHelper.SpellDefinitions.MindTwist
+                                                                                },
+                                                                                new List<SpellDefinition>
+                                                                                {
+                                                                                },
+                                                                                new List<SpellDefinition>
+                                                                                {
+                                                                                },
+                                                                                new List<SpellDefinition>
+                                                                                {
+                                                                                },
+                                                                                new List<SpellDefinition>
+                                                                                {
                                                                                 }
                                                                                 );
 
@@ -294,21 +307,76 @@ namespace SolastaWarlockClass
                                                                                                                                    new List<int> { 2, 2, 2, 2, 0, 0, 0 },//8
                                                                                                                                    new List<int> { 2, 2, 2, 2, 2, 0, 0 },//9
                                                                                                                                    new List<int> { 2, 2, 2, 2, 2, 0, 0 },//10
-                                                                                                                                   new List<int> { 3, 3, 3, 3, 3, 0, 0 },//11
-                                                                                                                                   new List<int> { 3, 3, 3, 3, 3, 0, 0 },//12
-                                                                                                                                   new List<int> { 3, 3, 3, 3, 3, 0, 0 },//13
-                                                                                                                                   new List<int> { 3, 3, 3, 3, 3, 0, 0 },//14
-                                                                                                                                   new List<int> { 3, 3, 3, 3, 3, 0, 0 },//15
-                                                                                                                                   new List<int> { 3, 3, 3, 3, 3, 0, 0 },//16
-                                                                                                                                   new List<int> { 4, 4, 4, 4, 4, 0, 0 },//17
-                                                                                                                                   new List<int> { 4, 4, 4, 4, 4, 0, 0 },//18
-                                                                                                                                   new List<int> { 4, 4, 4, 4, 4, 0, 0 },//19
-                                                                                                                                   new List<int> { 4, 4, 4, 4, 4, 0, 0 }//20
+                                                                                                                                   new List<int> { 3, 3, 3, 3, 3, 1, 0 },//11
+                                                                                                                                   new List<int> { 3, 3, 3, 3, 3, 1, 0 },//12
+                                                                                                                                   new List<int> { 3, 3, 3, 3, 3, 1, 1 },//13
+                                                                                                                                   new List<int> { 3, 3, 3, 3, 3, 1, 1 },//14
+                                                                                                                                   new List<int> { 3, 3, 3, 3, 3, 1, 1 },//15
+                                                                                                                                   new List<int> { 3, 3, 3, 3, 3, 1, 1 },//16
+                                                                                                                                   new List<int> { 4, 4, 4, 4, 4, 1, 1 },//17
+                                                                                                                                   new List<int> { 4, 4, 4, 4, 4, 1, 1 },//18
+                                                                                                                                   new List<int> { 4, 4, 4, 4, 4, 1, 1 },//19
+                                                                                                                                   new List<int> { 4, 4, 4, 4, 4, 1, 1 }//20
                                                                                                                                    )
                                                                                               );
+            warlock_spellcasting.SetSlotsRecharge(RuleDefinitions.RechargeRate.ShortRest);
+            warlock_spellcasting.focusType = EquipmentDefinitions.FocusType.Arcane;
+            warlock_spellcasting.mystic_arcanum_level_start = 6;
             warlock_spellcasting.replacedSpells = new List<int> {0, 1, 1, 1, 1, 1, 1, 1, 1, 0,
                                                                  1, 0, 1, 0, 1, 0, 1, 0, 1, 0};
-            warlock_spellcasting.SetSlotsRecharge(RuleDefinitions.RechargeRate.ShortRest);
+
+            var mystic_arcanum_spells = new List<List<SpellDefinition>>()
+            {
+                new List<SpellDefinition>
+                {
+                    DatabaseHelper.SpellDefinitions.CircleOfDeath,
+                    DatabaseHelper.SpellDefinitions.Eyebite,
+                    DatabaseHelper.SpellDefinitions.ConjureFey,
+                    DatabaseHelper.SpellDefinitions.TrueSeeing,
+                },
+                new List<SpellDefinition>
+                {
+                },
+                new List<SpellDefinition>
+                {
+                },
+                new List<SpellDefinition>
+                {
+                }
+            };
+            for (int i = 6; i < warlock_spellcasting.SpellListDefinition.SpellsByLevel.Count; i++)
+            {
+                var spells_by_lvl = new List<SpellDefinition>[10];
+                for (var j = 0; j < 10; j++)
+                {
+                    spells_by_lvl[j] = new List<SpellDefinition>();
+                }
+                spells_by_lvl[i] = mystic_arcanum_spells[i - 6];
+                mystic_arcanum[i - 6] = Helpers.ExtraSpellSelectionBuilder
+                                        .createExtraSpellSelection($"WarlockClassMysticArcanum{i}",
+                                                                   "",
+                                                                   Helpers.StringProcessing.replaceTagInString("Feature/&WarlockClassMysticArcanumTitle",
+                                                                                                               $"Feature/&WarlockClassMysticArcanumTitle{i}",
+                                                                                                               "<LEVEL>",
+                                                                                                               i.ToString()
+                                                                                                               ),
+                                                                   Helpers.StringProcessing.replaceTagInString("Feature/&WarlockClassMysticArcanumDescription",
+                                                                                                               $"Feature/&WarlockClassMysticArcanumDescription{i}",
+                                                                                                               "<LEVEL>",
+                                                                                                               i.ToString()
+                                                                                                               ),
+                                                                   warlock_class,
+                                                                   2 * i - 1,
+                                                                   1,
+                                                                   
+                                                                   Helpers.SpelllistBuilder.create9LevelSpelllist($"WarlockClassMysticArcanumSpellList{i}",
+                                                                                                                  "",
+                                                                                                                  Common.common_no_title,
+                                                                                                                  spells_by_lvl
+                                                                                                                  )
+
+                                                                   );
+            }
 
             createPactBoon();
             createInvocations();
@@ -324,6 +392,7 @@ namespace SolastaWarlockClass
                 Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(staff_focus, 1));
             }
 
+
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(invocations[1], 2));
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(invocations[2], 2));
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(pact_boon, 3));
@@ -332,6 +401,7 @@ namespace SolastaWarlockClass
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(invocations[7], 7));
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionFeatureSets.FeatureSetAbilityScoreChoice, 8));
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(invocations[9], 9));
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(mystic_arcanum[0], 11));
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionFeatureSets.FeatureSetAbilityScoreChoice, 12));
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(invocations[12], 12));
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionFeatureSets.FeatureSetAbilityScoreChoice, 16));
