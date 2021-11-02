@@ -37,7 +37,9 @@ namespace SolastaWarlockClass
         static public Dictionary<int, NewFeatureDefinitions.FeatureDefinitionExtraSpellSelection> book_of_secrets = new Dictionary<int, NewFeatureDefinitions.FeatureDefinitionExtraSpellSelection>();
         static public FeatureDefinitionProficiency beguiling_influence;
         static public FeatureDefinitionFeatureSet devils_sight;
-        //life drinker - charisma damage on hit with pact weapon
+        static public FeatureDefinitionAdditionalDamage lifedrinker_melee;
+        static public FeatureDefinitionAdditionalDamage lifedrinker_ranged;
+
 
 
         static public FeatureDefinitionFeatureSet pact_boon;
@@ -630,6 +632,7 @@ namespace SolastaWarlockClass
             createThirstingBlade();
             createEldritchArchery();
             createEldritchStrike();
+            createLifedrinker();
             var invocations_features = new List<(FeatureDefinition, int)>()
             {
                 (agonizing_blast, 0),
@@ -645,7 +648,9 @@ namespace SolastaWarlockClass
                 (thirsting_blade, 5),
                 (eldritch_smite, 5),
                 (otherworldy_leap, 9),
-                (ascendant_step, 9)
+                (ascendant_step, 9),
+                (lifedrinker_melee, 12),
+                (lifedrinker_ranged, 12)
             };
 
 
@@ -668,6 +673,46 @@ namespace SolastaWarlockClass
                 }
                 invocations[lvl] = feature;
             }
+        }
+
+        static void createLifedrinker()
+        {
+            string title_string = "Feature/&WarlockLifedrinkerInvocationTitle";
+            string description_string = "Feature/&WarlockLifedrinkerInvocationDescription";
+
+            lifedrinker_melee = Helpers.CopyFeatureBuilder<FeatureDefinitionAdditionalDamage>.createFeatureCopy("WarlockLifedrinkerMeleeInvocation",
+                                                                                                               "",
+                                                                                                               title_string,
+                                                                                                               setMainStatTextEntry(description_string),
+                                                                                                               null,
+                                                                                                               DatabaseHelper.FeatureDefinitionAdditionalDamages.AdditionalDamageDomainOblivionStrikeOblivion,
+                                                                                                               a =>
+                                                                                                               {
+                                                                                                                   a.triggerCondition = RuleDefinitions.AdditionalDamageTriggerCondition.AlwaysActive;
+                                                                                                                   a.familiesWithAdditionalDice = new List<string>();
+                                                                                                                   a.notificationTag = "Lifedrinker";
+                                                                                                                   a.familiesDiceNumber = 0;
+                                                                                                                   a.damageDiceNumber = 1;
+                                                                                                                   a.damageAdvancement = RuleDefinitions.AdditionalDamageAdvancement.None;
+                                                                                                                   a.requiredProperty = RuleDefinitions.AdditionalDamageRequiredProperty.MeleeWeapon;
+                                                                                                                   a.attackModeOnly = true;
+                                                                                                                   a.damageValueDetermination = RuleDefinitions.AdditionalDamageValueDetermination.SpellcastingBonus;
+                                                                                                                   a.limitedUsage = RuleDefinitions.FeatureLimitedUsage.None;
+                                                                                                               }
+                                                                                                               );
+            lifedrinker_ranged = Helpers.CopyFeatureBuilder<FeatureDefinitionAdditionalDamage>.createFeatureCopy("WarlockLifedrinkerRangedInvocation",
+                                                                                                                "",
+                                                                                                                "",
+                                                                                                                "",
+                                                                                                                null,
+                                                                                                                lifedrinker_melee,
+                                                                                                                a =>
+                                                                                                                {
+                                                                                                                    a.requiredProperty = RuleDefinitions.AdditionalDamageRequiredProperty.RangeWeapon;
+                                                                                                                }
+                                                                                                                );
+            NewFeatureDefinitions.FeatureData.addFeatureRestrictions(lifedrinker_melee, new NewFeatureDefinitions.HasFeatureRestriction(pact_of_blade));
+            NewFeatureDefinitions.FeatureData.addFeatureRestrictions(lifedrinker_ranged, new NewFeatureDefinitions.HasFeatureRestriction(pact_of_arrow));
         }
 
 
@@ -915,8 +960,8 @@ namespace SolastaWarlockClass
             var invocations_levels = new int[] { 5, 7, 9, 12, 15, 18 };
 
             var spelllist = Helpers.SpelllistBuilder.createCombinedSpellListWithLevelRestriction("WarlockClassBookOfEldritchSecretsInvocationSpelllist", "", "",
-                                                                                     (warlock_spelllist, 10),
-                                                                                     (DatabaseHelper.SpellListDefinitions.SpellListWizard, 10)
+                                                                                     (warlock_spelllist, 5),
+                                                                                     (DatabaseHelper.SpellListDefinitions.SpellListWizard, 5)
                                                                                      );
             spelllist.spellsByLevel[0].spells.Clear();
 

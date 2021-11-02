@@ -93,3 +93,7 @@ Feature/&WarlockArchmageSubclassArcanePowerTitle	Arcane Power
 Feature/&WarlockArchmageSubclassArcanePowerDescription	Your patron grants you knowlege of a specific area of magecraft. Pick one wizard subclass, you gain the benefits of its 2nd level feature. If the feature would make certain spells count as wizard ones, you count them as warlock spells. If the feature would add certain spells to a wizard's spellbook, add them to your list of known spells instead.
 Feature/&WarlockArchmageSubclassArcaneResistanceTitle	Arcane Ward
 Feature/&WarlockArchmageSubclassArcaneResistanceDescription	You receive +1 bonus to all your savingthrows against spells. In addition, you gain resitance against force damage.
+Feedback/&AdditionalDamageLifedrinkerFormat	Lifedrinker Extra Damage
+Feedback/&AdditionalDamageLifedrinkerLine	Lifedrinker Extra Damage
+Feature/&WarlockLifedrinkerInvocationTitle	Lifedrinker
+Feature/&WarlockLifedrinkerInvocationDescription	When you hit a creature with your pact weapon, the creature takes extra necrotic damage equal to your <MAIN_STAT> modifier.

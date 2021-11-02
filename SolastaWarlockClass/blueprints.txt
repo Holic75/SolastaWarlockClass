@@ -236,3 +236,5 @@ WarlockClassMysticArcanumSpellcasting	226a4d40-bf39-4add-8d87-1bae660912a1
 WarlockClassMysticArcanum6CircleOfDeath	377ae350-af01-4f60242fe6529aa816
 WarlockClassMysticArcanum6Eyebite	377ae350-af01-4f60be7b2d59750659
 WarlockClassMysticArcanum6TrueSeeing	377ae350-af01-4f60aad67ecadafaa5
+WarlockLifedrinkerMeleeInvocation	efce7baa-5340-4962-8986-7c56afd95f0a
+WarlockLifedrinkerRangedInvocation	4e6e856e-ddd8-46c3-abbd-c5f134cb8bc4
